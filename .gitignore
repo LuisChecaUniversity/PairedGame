@@ -27,5 +27,8 @@
 *.out
 *.app
 
-# IDE user files
+# IDE files
 *.userprefs
+*.pidb
+bin/
+obj/
