@@ -41,6 +41,7 @@
     <Compile Include="AppMain.cs" />
     <Compile Include="GameInfo.cs" />
     <Compile Include="SceneManager.cs" />
+    <Compile Include="AssetManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
