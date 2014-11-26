@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="AppMain.cs" />
     <Compile Include="GameInfo.cs" />
+    <Compile Include="SceneManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
