@@ -30,5 +30,10 @@
 # IDE files
 *.userprefs
 *.pidb
+*.*~
 bin/
 obj/
+
+# Asset tools
+assets/sources/
+Thumbs.db
