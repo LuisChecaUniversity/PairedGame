@@ -42,6 +42,7 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="AssetManager.cs" />
+    <Compile Include="Character.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
