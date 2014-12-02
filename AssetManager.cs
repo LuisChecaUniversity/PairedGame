@@ -3,18 +3,17 @@ using System.Collections.Generic;
 
 namespace PairedGame
 {
-	abstract class AssetManager
+	abstract static class AssetManager
 	{
 		protected static Dictionary<string, object> resourceMap;
 		
 		public static void AddAsset(string key, object asset)
 		{
-			resourceMap.Add(key, asset);
+			if (!IsAssetLoaded(key)) resourceMap.Add(key, asset);
 		}
 		
 		public static void RemoveAsset(string key)
 		{
-			resourceMap[key].Dispose();
 			resourceMap.Remove(key);
 		}
 		
