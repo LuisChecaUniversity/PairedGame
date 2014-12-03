@@ -14,14 +14,14 @@ namespace PairedGame
 		RangedStrong
 	}
 	
-	public struct Statistics
+	public class Statistics
 	{
-		int Health = 100;
-		int Lives = 5;
-		int Defense = 100;
-		int Attack = 100;
-		int RangedAttack = 75;
-		double Luck = rnd.NextDouble();
+		public int Health = 100;
+		public int Lives = 5;
+		public int Defense = 100;
+		public int Attack = 100;
+		public int RangedAttack = 75;
+		public double Luck = GameInfo.Rnd.NextDouble();
 	}
 	
 	public class Character: SpriteTile
@@ -29,7 +29,6 @@ namespace PairedGame
 		private bool isAlive = true;
 		private AttackStatus attackState = AttackStatus.None;
 		private Statistics statistics = new Statistics();
-		private static Random rnd = new Random();
 		
 		public Character(TextureInfo textureInfo, Vector2i tileSize, Vector2 position):
 			base(textureInfo, tileSize)
@@ -38,24 +37,24 @@ namespace PairedGame
 			Position = position;
 			Quad.S = textureInfo.TileSizeInPixelsf;
 			// Attach update function to scheduler
-			Schedule(Update);
+			ScheduleUpdate();
 		}
 		
 		public Character(TextureInfo textureInfo, Vector2i tileSize, Vector2i tileRange, Vector2 position): 
 			this(textureInfo, tileSize, position)
 		{
 			// Create animation function. tileRange = { minTile1D, maxTile1D }
-			sprite.ScheduleInterval( (dt) => {
+			ScheduleInterval( (dt) => {
 				if(IsAlive)
 				{
-					int tileIndex = sprite.TileIndex1D < tileRange.Y ? sprite.TileIndex1D + 1 : tileRange.X;
-					sprite.TileIndex1D = tileIndex;
+					int tileIndex = TileIndex1D < tileRange.Y ? TileIndex1D + 1 : tileRange.X;
+					TileIndex1D = tileIndex;
 				}
 			}, 0.2f);
 		}
 		
 		public Character(TextureInfo textureInfo, Vector2i tileSize, int tileIndex, Vector2 position):
-			this(TextureInfo, tileSize, position)
+			this(textureInfo, tileSize, position)
 		{
 			TileIndex1D = tileIndex;
 		}
@@ -64,25 +63,26 @@ namespace PairedGame
 		
 		public bool IsAlive { get{ return isAlive; } set{ isAlive = value; } }
 		
-		public void Update(float dt)
+		override public void Update(float dt)
 		{
+			base.Update(dt);
 			bool isDefending = false;
 			int damage = 0;
 			switch(attackState)
 			{
-			case None:
+			case AttackStatus.None:
 				isDefending = true;
 				break;
-			case MeleeNormal:
+			case AttackStatus.MeleeNormal:
 				damage = (int)(Stats.Attack * Stats.Luck);
 				break;
-			case MeleeStrong:
+			case AttackStatus.MeleeStrong:
 				damage = (int)(Stats.Attack * Stats.Luck * 1.15);
 				break;
-			case RangedNormal:
+			case AttackStatus.RangedNormal:
 				damage = (int)(Stats.RangedAttack * Stats.Luck);
 				break;
-			case RangedStrong:
+			case AttackStatus.RangedStrong:
 				damage = (int)(Stats.RangedAttack * Stats.Luck * 1.15);
 				break;
 			default:
@@ -91,7 +91,7 @@ namespace PairedGame
 			
 			if (isDefending)
 			{
-				Stats.Health -= Math.Abs(damage - Stats.Defense);
+				Stats.Health -= System.Math.Abs(damage - Stats.Defense);
 			}
 		}
 		
@@ -102,7 +102,7 @@ namespace PairedGame
 		
 		public AttackStatus RandomAttack()
 		{
-			AttackStatus attack = (AttackStatus)rnd.Next(1, AttackStatus.RangedStrong + 1);
+			AttackStatus attack = (AttackStatus)GameInfo.Rnd.Next(1, (int)AttackStatus.RangedStrong + 1);
 			return attack;
 		}
 	}
