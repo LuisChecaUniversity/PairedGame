@@ -16,5 +16,7 @@ namespace PairedGame
 		public static float TotalGameTime { get; set; }
 		
 		public static Random Rnd { get { return rnd; } }
+		
+		public static float CameraHeight { get; set; }
 	}
 }
