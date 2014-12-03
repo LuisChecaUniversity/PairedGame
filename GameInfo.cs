@@ -2,9 +2,9 @@ using System;
 
 namespace PairedGame
 {
-	public sealed class GameInfo
+	public static class GameInfo
 	{
-		private GameInfo(){}
+		private static Random rnd = new Random();
 		
 		public static int EnemiesEncountered { get; set; }		
 		public static int EnemiesKilled { get; set; }
@@ -14,5 +14,7 @@ namespace PairedGame
 		public static double TimeOfTheDay { get; set; }
 		
 		public static float TotalGameTime { get; set; }
+		
+		public static Random Rnd { get { return rnd; } }
 	}
 }
