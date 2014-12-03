@@ -69,4 +69,7 @@
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\level_key.txt" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,13 @@
+KEY =     DESCRIPTION     =       2D TILE INDEX
+D   = Door                = (8, 1), (9, 1), (10, 1)
+P   = Top Left Corner     = (0, 4)
+O   = Top Right Corner    = (4, 4)
+I   = Bottom Left Corner  = (0, 0)
+U   = Bottom Right Corner = (4, 0)
+M   = Top Edge            = (1, 4), (2, 4), (3, 4)
+N   = Bottom Edge         = (1, 0), (2, 0), (3, 0)
+B   = Left Edge           = (0, 1), (0, 2), (0, 3)
+V   = Right Edge          = (4, 1), (4, 2), (4, 3)
+X   = Floor tile          = (1, 1)     ->   (3, 3)
+S   = Player Start
+Z   = Level End
