@@ -8,8 +8,10 @@ namespace PairedGame
 	{
 		public CrawlerScreen()
 		{
-			Camera2D.SetViewFromHeightAndBottomLeft(180f, Vector2.Zero);
-			Tile.Loader("/Application/assets/level1.txt", this);
+			//Camera.SetViewFromViewport();
+			Vector2 cameraCentre = new Vector2();
+			Tile.Loader("/Application/assets/level1.txt", ref cameraCentre, this);
+			Camera2D.SetViewFromHeightAndCenter(200f, cameraCentre);
 		}
 	}
 }

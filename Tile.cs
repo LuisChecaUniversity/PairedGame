@@ -31,6 +31,7 @@ namespace PairedGame
 			Position = position;
 			Quad.S = TextureInfo.TileSizeInPixelsf;
 			
+			// Based on loadKey set Tile to draw and its collision.
 			switch(loadKey)
 			{
 			case 'S': 
@@ -80,25 +81,44 @@ namespace PairedGame
 			}
 		}
 		
-		public static void Loader(string filepath, Scene scene)
+		public static void Loader(string filepath, ref Vector2 playerPos, Scene scene)
 		{
 			int x = 0;
 			int y = 0;
-			int SIZE = 16;
+			const int SIZE = 16;
+			const int PLAYER_INDEX = 9;
 			Tile t;
-			foreach (string line in System.IO.File.ReadLines(filepath))
+			// Read whole level files
+			var lines = System.IO.File.ReadAllLines(filepath);
+			// Iterate end to start, line by line
+			for (int i = lines.Length - 1; i >= 0; i--)
 			{
+				// New row: reset x position and read next line.
 				x = 0;
-			    foreach (char c in line.ToUpper())
+				var line = lines[i].ToUpper();
+			    foreach (char c in line)
 				{
 					if (c != ' ')
 					{
-						t = new Tile(c, new Vector2(x, y));
-						scene.AddChild(t);
+						// Add tile at x, y
+						scene.AddChild(new Tile(c, new Vector2(x, y)));
+						if (c == 'S')
+						{
+							// S = Player start, store co-ordinates
+							playerPos = new Vector2(x, y);
+						}
 					}
+					// Move to next tile "grid"
 					x += SIZE;
 				}
+				// End row: move y position to next tile row 
 				y += SIZE;
+			}
+			
+			if (playerPos != Vector2.Zero)
+			{
+				// Player position has been set, add the player.
+				scene.AddChild(new Character(PLAYER_INDEX, playerPos));
 			}
 		}
 	}
