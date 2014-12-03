@@ -30,18 +30,19 @@ namespace PairedGame
 		private AttackStatus attackState = AttackStatus.None;
 		private Statistics statistics = new Statistics();
 		
-		public Character(TextureInfo textureInfo, Vector2i tileSize, Vector2 position):
-			base(textureInfo, tileSize)
+		public Character(Vector2 position):
+			base()
 		{
+			TextureInfo = TextureManager.Get("chars");
 			// Size and position
 			Position = position;
-			Quad.S = textureInfo.TileSizeInPixelsf;
+			Quad.S = TextureInfo.TileSizeInPixelsf;
 			// Attach update function to scheduler
 			ScheduleUpdate();
 		}
 		
-		public Character(TextureInfo textureInfo, Vector2i tileSize, Vector2i tileRange, Vector2 position): 
-			this(textureInfo, tileSize, position)
+		public Character(Vector2i tileRange, Vector2 position): 
+			this(position)
 		{
 			// Create animation function. tileRange = { minTile1D, maxTile1D }
 			ScheduleInterval( (dt) => {
@@ -53,8 +54,8 @@ namespace PairedGame
 			}, 0.2f);
 		}
 		
-		public Character(TextureInfo textureInfo, Vector2i tileSize, int tileIndex, Vector2 position):
-			this(textureInfo, tileSize, position)
+		public Character(int tileIndex, Vector2 position):
+			this(position)
 		{
 			TileIndex1D = tileIndex;
 		}
@@ -93,11 +94,6 @@ namespace PairedGame
 			{
 				Stats.Health -= System.Math.Abs(damage - Stats.Defense);
 			}
-		}
-		
-		public void Dispose()
-		{
-			TextureInfo.Dispose();
 		}
 		
 		public AttackStatus RandomAttack()
