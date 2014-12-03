@@ -1,7 +1,5 @@
 using System;
 using Sce.PlayStation.Core;
-using Sce.PlayStation.HighLevel.GameEngine2D;
-using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace PairedGame
 {
@@ -24,45 +22,31 @@ namespace PairedGame
 		public double Luck = GameInfo.Rnd.NextDouble();
 	}
 	
-	public class Character: SpriteTile
+	public class EntityAlive: Entity
 	{
-		private bool isAlive = true;
-		private AttackStatus attackState = AttackStatus.None;
-		private Statistics statistics = new Statistics();
+		protected AttackStatus attackState = AttackStatus.None;
+		protected Statistics statistics = new Statistics();
 		
-		public Character(Vector2 position):
-			base()
+		public EntityAlive(Vector2 position):
+			base(position)
 		{
-			TextureInfo = TextureManager.Get("chars");
-			// Size and position
-			Position = position;
-			Quad.S = TextureInfo.TileSizeInPixelsf;
 			// Attach update function to scheduler
 			ScheduleUpdate();
 		}
 		
-		public Character(Vector2i tileRange, Vector2 position): 
-			this(position)
+		public EntityAlive(Sce.PlayStation.HighLevel.GameEngine2D.Base.Vector2i tileRange, Vector2 position):
+			base(tileRange, position)
 		{
-			// Create animation function. tileRange = { minTile1D, maxTile1D }
-			ScheduleInterval( (dt) => {
-				if(IsAlive)
-				{
-					int tileIndex = TileIndex1D < tileRange.Y ? TileIndex1D + 1 : tileRange.X;
-					TileIndex1D = tileIndex;
-				}
-			}, 0.2f);
+			ScheduleUpdate();
 		}
 		
-		public Character(int tileIndex, Vector2 position):
-			this(position)
+		public EntityAlive(int tileIndex, Vector2 position):
+			base(tileIndex, position)
 		{
-			TileIndex1D = tileIndex;
+			ScheduleUpdate();
 		}
 		
 		public Statistics Stats { get{ return statistics; } }
-		
-		public bool IsAlive { get{ return isAlive; } set{ isAlive = value; } }
 		
 		override public void Update(float dt)
 		{
@@ -103,3 +87,4 @@ namespace PairedGame
 		}
 	}
 }
+

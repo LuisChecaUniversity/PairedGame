@@ -42,10 +42,12 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="AssetManager.cs" />
-    <Compile Include="Character.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="TextureManager.cs" />
     <Compile Include="CrawlerScreen.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EntityAlive.cs" />
+    <Compile Include="Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />

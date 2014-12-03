@@ -39,7 +39,7 @@ namespace PairedGame
 			// Load and store textures
 			TextureManager.AddAsset("tiles", new TextureInfo(new Texture2D("/Application/assets/dungeon_tiles.png", false),
 			                                                 new Vector2i(21, 5)));
-			TextureManager.AddAsset("chars", new TextureInfo(new Texture2D("/Application/assets/dungeon_objects.png", false),
+			TextureManager.AddAsset("entities", new TextureInfo(new Texture2D("/Application/assets/dungeon_objects.png", false),
 			                                                 new Vector2i(12, 1)));
 			// Tell the UISystem to run an empty scene
 			UISystem.SetScene(new Sce.PlayStation.HighLevel.UI.Scene(), null);

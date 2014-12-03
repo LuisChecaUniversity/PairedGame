@@ -76,6 +76,9 @@ namespace PairedGame
 				TileIndex2D = new Vector2i(4, GameInfo.Rnd.Next(1, 4));
 				collidableSides = Collidable.Right;
 				break;
+			case 'Z':
+				TileIndex2D = new Vector2i(11, 3);
+				break;
 			default:
 				break;
 			}
@@ -87,7 +90,7 @@ namespace PairedGame
 			int y = 0;
 			const int SIZE = 16;
 			const int PLAYER_INDEX = 9;
-			Tile t;
+			
 			// Read whole level files
 			var lines = System.IO.File.ReadAllLines(filepath);
 			// Iterate end to start, line by line
@@ -118,7 +121,7 @@ namespace PairedGame
 			if (playerPos != Vector2.Zero)
 			{
 				// Player position has been set, add the player.
-				scene.AddChild(new Character(PLAYER_INDEX, playerPos));
+				scene.AddChild(new Player(playerPos));
 			}
 		}
 	}

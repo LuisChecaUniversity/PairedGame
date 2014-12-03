@@ -10,4 +10,4 @@ B   = Left Edge           = (0, 1), (0, 2), (0, 3)
 V   = Right Edge          = (4, 1), (4, 2), (4, 3)
 X   = Floor tile          = (1, 1)     ->   (3, 3)
 S   = Player Start
-Z   = Level End
+Z   = Level End           = (11, 3)
