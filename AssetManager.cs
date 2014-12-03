@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace PairedGame
 {
-	abstract static class AssetManager
+	public abstract class AssetManager<T>
 	{
-		protected static Dictionary<string, object> resourceMap;
+		protected static Dictionary<string, T> resourceMap = new Dictionary<string, T>();
 		
-		public static void AddAsset(string key, object asset)
+		public static void AddAsset(string key, T asset)
 		{
 			if (!IsAssetLoaded(key)) resourceMap.Add(key, asset);
 		}
@@ -20,6 +20,11 @@ namespace PairedGame
 		public static bool IsAssetLoaded(string key)
 		{
 			return resourceMap.ContainsKey(key);	
+		}
+		
+		public static T Get(string key)
+		{
+			return resourceMap[key];
 		}
 	}
 }

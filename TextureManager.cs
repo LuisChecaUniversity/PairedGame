@@ -1,13 +1,16 @@
 using System;
+using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace PairedGame
 {
-	public static class TextureManager: AssetManager
+	public class TextureManager: AssetManager<TextureInfo>
 	{
-		override public static void RemoveAsset(string key)
+		new public static void RemoveAsset(string key)
 		{
+			if(!IsAssetLoaded(key))
+				return;
 			resourceMap[key].Dispose();
-			base.RemoveAsset(key);
+			resourceMap.Remove(key);
 		}
 	}
 }
