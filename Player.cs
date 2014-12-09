@@ -19,7 +19,7 @@ namespace PairedGame
 			
 	        var gamePadData = GamePad.GetData(0);
 
-	        int speed = 4;
+	        int speed = 2;
 			int x = 0;
 			int y = 0;
 	
