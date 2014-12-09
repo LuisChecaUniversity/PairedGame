@@ -22,7 +22,6 @@ namespace PairedGame
 	public class Tile: SpriteTile
 	{
 		private bool isLootable = false;
-		private bool isOccupied = false;
 		private Collidable collidableSides = Collidable.None;
 		
 		public Tile(char loadKey, Vector2 position): base()
@@ -30,12 +29,11 @@ namespace PairedGame
 			TextureInfo = TextureManager.Get("tiles");
 			Position = position;
 			Quad.S = TextureInfo.TileSizeInPixelsf;
-			
+
 			// Based on loadKey set Tile to draw and its collision.
 			switch(loadKey)
 			{
 			case 'S': 
-				isOccupied = true;
 				TileIndex2D = new Vector2i(GameInfo.Rnd.Next(1, 4), GameInfo.Rnd.Next(1, 4));
 				break;
 			case 'X':
@@ -84,12 +82,67 @@ namespace PairedGame
 			}
 		}
 		
+		public bool IsInTile(Vector2 checkPosition) { return Tile.IsInTile(Position, checkPosition); }
+		
+		public void HandleCollision(ref int speedX, ref int speedY)
+		{
+			switch (collidableSides)
+			{
+			case Collidable.Bottom:
+				speedY = speedY < 0 ? -speedY : speedY;
+				break;
+			case Collidable.BottomLeft:
+				speedX = speedX < 0 ? -speedX : speedX;
+				speedY = speedY < 0 ? -speedY : speedY;
+				break;
+			case Collidable.BottomRight:
+				speedX = speedX > 0 ? -speedX : speedX;
+				speedY = speedY < 0 ? -speedY : speedY;
+				break;
+			case Collidable.Left:
+				speedX = speedX < 0 ? -speedX : speedX;
+				break;
+			case Collidable.None:
+				break;
+			case Collidable.Right:
+				speedX = speedX > 0 ? -speedX : speedX;
+				break;
+			case Collidable.Top:
+				speedY = speedY > 0 ? -speedY : speedY;
+				break;
+			case Collidable.TopLeft:
+				speedX = speedX < 0 ? -speedX : speedX;
+				speedY = speedY > 0 ? -speedY : speedY;
+				break;
+			case Collidable.TopRight:
+				speedX = speedX > 0 ? -speedX : speedX;
+				speedY = speedY > 0 ? -speedY : speedY;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		public static int Height { get { return 16; } }
+		public static int Width { get { return 16; } }
+		
+		public static bool IsInTile(Vector2 tilePosition, Vector2 checkPosition)
+		{
+			if (tilePosition == checkPosition)
+				return true;
+			
+			if(tilePosition.X <= checkPosition.X && tilePosition.X + Tile.Width > checkPosition.X &&
+			   tilePosition.Y <= checkPosition.Y && tilePosition.Y + Tile.Height > checkPosition.Y)
+			{
+				return true;
+			}
+			return false;
+		}
+		
 		public static void Loader(string filepath, ref Vector2 playerPos, Scene scene)
 		{
 			int x = 0;
 			int y = 0;
-			const int SIZE = 16;
-			const int PLAYER_INDEX = 9;
 			
 			// Read whole level files
 			var lines = System.IO.File.ReadAllLines(filepath);
@@ -112,10 +165,10 @@ namespace PairedGame
 						}
 					}
 					// Move to next tile "grid"
-					x += SIZE;
+					x += Width;
 				}
 				// End row: move y position to next tile row 
-				y += SIZE;
+				y += Height;
 			}
 			
 			if (playerPos != Vector2.Zero)

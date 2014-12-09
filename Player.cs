@@ -39,9 +39,28 @@ namespace PairedGame
 	        {
                 y = -speed;
 	        }
+			
+			CollideWithTiles(ref x, ref y);
+			
 			Position = Position + new Vector2(x, y);
 			
-			Parent.Camera2D.SetViewFromHeightAndCenter(GameInfo.CameraHeight, Position);
+			Parent.Camera2D.SetViewFromHeightAndCenter(GameInfo.CameraHeight, Position);			
+		}
+		
+		private void CollideWithTiles(ref int x, ref int y)
+		{
+			foreach (var child in SceneManager.CurrentScene.Children)
+			{
+				if (child != this)
+				{
+					if (Tile.IsInTile(child.Position, Position))
+					{
+						Tile t = child as Tile;
+						if (t != null)
+							t.HandleCollision(ref x, ref y);
+					}
+				}
+			}
 		}
 	}
 }
