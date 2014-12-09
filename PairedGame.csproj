@@ -48,6 +48,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="EntityAlive.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="AudioManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
