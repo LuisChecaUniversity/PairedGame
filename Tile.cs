@@ -83,7 +83,7 @@ namespace PairedGame
 			}
 		}
 
-		private static float boundsScale = 0.75f;
+		private static float boundsScale = 0.6f;
 		
 		public bool Overlaps(SpriteBase sprite)
 		{
@@ -98,7 +98,7 @@ namespace PairedGame
 		public void HandleCollision(Vector2 pos, ref Vector2 speed)
 		{
 			// Collision offset and returning force
-			int offset = (int)(System.Math.Min(Width, Height) * (1 - boundsScale) / 2);
+			int offset = (int)(System.Math.Min(Width, Height) * (1 - boundsScale) / 4);
 			float factor = -1f;
 			// Repeating booleans
 			bool collisionLeft = pos.X < Position.X + offset && speed.X < 0;
@@ -109,10 +109,7 @@ namespace PairedGame
 			// Immediately collide if tile is occupied
 			if(IsOccupied)
 			{
-				if(collisionTop || collisionBottom)
-					speed.Y *= factor - 1;
-				if(collisionLeft || collisionRight)
-					speed.X *= factor - 1;
+				speed *= factor - 1;
 				return;
 			}
 			switch(collidableSides)
