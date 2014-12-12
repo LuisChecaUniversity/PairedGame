@@ -21,26 +21,27 @@ namespace PairedGame
 	
 	public class Tile: SpriteTile
 	{
-		private bool isLootable = false;
 		private Collidable collidableSides = Collidable.None;
+		private char Key;
+		public bool IsOccupied = false;
 		
 		public Tile(char loadKey, Vector2 position): base()
 		{
 			TextureInfo = TextureManager.Get("tiles");
 			Position = position;
 			Quad.S = TextureInfo.TileSizeInPixelsf;
-
+			Key = loadKey;
 			// Based on loadKey set Tile to draw and its collision.
 			switch(loadKey)
 			{
 			case 'S': 
-				TileIndex2D = new Vector2i(GameInfo.Rnd.Next(1, 4), GameInfo.Rnd.Next(1, 4));
+				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), Info.Rnd.Next(1, 4));
 				break;
 			case 'X':
-				TileIndex2D = new Vector2i(GameInfo.Rnd.Next(1, 4), GameInfo.Rnd.Next(1, 4));
+				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), Info.Rnd.Next(1, 4));
 				break;
 			case 'D':
-				TileIndex2D = new Vector2i(GameInfo.Rnd.Next(8, 11), 1);
+				TileIndex2D = new Vector2i(Info.Rnd.Next(8, 11), 1);
 				break;
 			case 'P':
 				TileIndex2D = new Vector2i(0, 4);
@@ -59,19 +60,19 @@ namespace PairedGame
 				collidableSides = Collidable.BottomRight;
 				break;
 			case 'M':
-				TileIndex2D = new Vector2i(GameInfo.Rnd.Next(1, 4), 4);
+				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), 4);
 				collidableSides = Collidable.Top;
 				break;
 			case 'N':
-				TileIndex2D = new Vector2i(GameInfo.Rnd.Next(1, 4), 0);
+				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), 0);
 				collidableSides = Collidable.Bottom;
 				break;
 			case 'B':
-				TileIndex2D = new Vector2i(0, GameInfo.Rnd.Next(1, 4));
+				TileIndex2D = new Vector2i(0, Info.Rnd.Next(1, 4));
 				collidableSides = Collidable.Left;
 				break;
 			case 'V':
-				TileIndex2D = new Vector2i(4, GameInfo.Rnd.Next(1, 4));
+				TileIndex2D = new Vector2i(4, Info.Rnd.Next(1, 4));
 				collidableSides = Collidable.Right;
 				break;
 			case 'Z':
@@ -81,97 +82,123 @@ namespace PairedGame
 				break;
 			}
 		}
+
+		private static float boundsScale = 0.75f;
 		
-		public bool IsInTile(Vector2 checkPosition) { return Tile.IsInTile(Position, checkPosition); }
-		
-		public void HandleCollision(ref Vector2 speed)
+		public bool Overlaps(SpriteBase sprite)
 		{
-			switch (collidableSides)
+			Bounds2 otherBounds = new Bounds2();
+			Bounds2 thisBounds = new Bounds2();
+			sprite.GetContentWorldBounds(ref otherBounds);
+			GetContentWorldBounds(ref thisBounds);
+			thisBounds = thisBounds.Scale(new Vector2(boundsScale, boundsScale), thisBounds.Center);
+			return thisBounds.Overlaps(otherBounds);
+		}
+		
+		public void HandleCollision(Vector2 pos, ref Vector2 speed)
+		{
+			// Collision offset and returning force
+			int offset = (int)(System.Math.Min(Width, Height) * (1 - boundsScale) / 2);
+			float factor = -1f;
+			// Repeating booleans
+			bool collisionLeft = pos.X < Position.X + offset && speed.X < 0;
+			bool collisionRight = pos.X + Width > Position.X + Width - offset && speed.X > 0;
+			bool collisionTop = pos.Y + Height < Position.Y + Height - offset && speed.Y > 0;
+			bool collisionBottom = pos.Y < Position.Y + offset && speed.Y < 0;
+			
+			// Immediately collide if tile is occupied
+			if(IsOccupied)
+			{
+				if(collisionTop || collisionBottom)
+					speed.Y *= factor - 1;
+				if(collisionLeft || collisionRight)
+					speed.X *= factor - 1;
+				return;
+			}
+			switch(collidableSides)
 			{
 			case Collidable.Bottom:
-				speed.Y = speed.Y < 0 ? -speed.Y : speed.Y;
-				break;
 			case Collidable.BottomLeft:
-				speed.X = speed.X < 0 ? -speed.X : speed.X;
-				speed.Y = speed.Y < 0 ? -speed.Y : speed.Y;
-				break;
 			case Collidable.BottomRight:
-				speed.X = speed.X > 0 ? -speed.X : speed.X;
-				speed.Y = speed.Y < 0 ? -speed.Y : speed.Y;
+				if(collisionBottom)
+					speed.Y *= factor;
+				
+				if((collisionLeft && collidableSides == Collidable.BottomLeft) ||
+					(collisionRight && collidableSides == Collidable.BottomRight))
+					speed.X *= factor;
 				break;
 			case Collidable.Left:
-				speed.X = speed.X < 0 ? -speed.X : speed.X;
-				break;
-			case Collidable.None:
+				if(collisionLeft)
+					speed.X *= factor;
 				break;
 			case Collidable.Right:
-				speed.X = speed.X > 0 ? -speed.X : speed.X;
+				if(collisionRight)
+					speed.X *= factor;
 				break;
 			case Collidable.Top:
-				speed.Y = speed.Y > 0 ? -speed.Y : speed.Y;
-				break;
 			case Collidable.TopLeft:
-				speed.X = speed.X < 0 ? -speed.X : speed.X;
-				speed.Y = speed.Y > 0 ? -speed.Y : speed.Y;
-				break;
 			case Collidable.TopRight:
-				speed.X = speed.X > 0 ? -speed.X : speed.X;
-				speed.Y = speed.Y > 0 ? -speed.Y : speed.Y;
+				if(collisionTop)
+					speed.Y *= factor;
+				
+				if((collisionLeft && collidableSides == Collidable.TopLeft) ||
+				    (collisionRight && collidableSides == Collidable.TopRight))
+					speed.X *= factor;
 				break;
+			case Collidable.None:
 			default:
 				break;
 			}
 		}
 		
 		public static int Height { get { return 16; } }
+
 		public static int Width { get { return 16; } }
-		
-		public static bool IsInTile(Vector2 tilePosition, Vector2 checkPosition)
-		{
-			if (tilePosition == checkPosition)
-				return true;
-			
-			if(tilePosition.X <= checkPosition.X && tilePosition.X + Tile.Width > checkPosition.X &&
-			   tilePosition.Y <= checkPosition.Y && tilePosition.Y + Tile.Height > checkPosition.Y)
-			{
-				return true;
-			}
-			return false;
-		}
 		
 		public static void Loader(string filepath, ref Vector2 playerPos, Scene scene)
 		{
-			int x = 0;
-			int y = 0;
+			Vector2 pos = Vector2.Zero;
+			Tile t = null;
 			
 			// Read whole level files
 			var lines = System.IO.File.ReadAllLines(filepath);
 			// Iterate end to start, line by line
-			for (int i = lines.Length - 1; i >= 0; i--)
+			for(int i = lines.Length - 1; i >= 0; i--)
 			{
 				// New row: reset x position and read next line.
-				x = 0;
+				pos.X = 0;
 				var line = lines[i].ToUpper();
-			    foreach (char c in line)
+				foreach(char c in line)
 				{
-					if (c != ' ')
+					if(c == ' ')
 					{
-						// Add tile at x, y
-						scene.AddChild(new Tile(c, new Vector2(x, y)));
-						if (c == 'S')
-						{
-							// S = Player start, store co-ordinates
-							playerPos = new Vector2(x, y);
-						}
+						// Move to next tile in "grid"
+						pos.X += Width;
+						continue;
+					}
+					// Make/add tile at x, y
+					t = new Tile(c, pos);
+					scene.AddChild(t);
+					// Player start, store position
+					if(c == 'S')
+					{
+						playerPos = pos;
+					}
+					// If floor, chance to spawn enemy
+					if(c == 'X' && Info.Rnd.Next(0, 11) == 1)
+					{
+						EntityAlive e = new EntityAlive(Info.Rnd.Next(1, 10), pos, new Vector2i(0, 1));
+						scene.AddChild(e);
+						t.IsOccupied = true;
 					}
 					// Move to next tile "grid"
-					x += Width;
+					pos.X += Width;
 				}
 				// End row: move y position to next tile row 
-				y += Height;
+				pos.Y += Height;
 			}
 			
-			if (playerPos != Vector2.Zero)
+			if(!playerPos.IsZero())
 			{
 				// Player position has been set, add the player.
 				scene.AddChild(new Player(playerPos));
