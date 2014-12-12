@@ -103,7 +103,7 @@ namespace PairedGame
 			// Repeating booleans
 			bool collisionLeft = pos.X < Position.X + offset && speed.X < 0;
 			bool collisionRight = pos.X + Width > Position.X + Width - offset && speed.X > 0;
-			bool collisionTop = pos.Y + Height < Position.Y + Height - offset && speed.Y > 0;
+			bool collisionTop = pos.Y + Height > Position.Y + Height - offset && speed.Y > 0;
 			bool collisionBottom = pos.Y < Position.Y + offset && speed.Y < 0;
 			
 			// Immediately collide if tile is occupied
