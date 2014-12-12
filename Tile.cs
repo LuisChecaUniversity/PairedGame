@@ -22,7 +22,7 @@ namespace PairedGame
 	public class Tile: SpriteTile
 	{
 		private Collidable collidableSides = Collidable.None;
-		private char Key;
+		public char Key;
 		public bool IsOccupied = false;
 		
 		public Tile(char loadKey, Vector2 position): base()
