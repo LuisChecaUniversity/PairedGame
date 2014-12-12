@@ -84,39 +84,39 @@ namespace PairedGame
 		
 		public bool IsInTile(Vector2 checkPosition) { return Tile.IsInTile(Position, checkPosition); }
 		
-		public void HandleCollision(ref int speedX, ref int speedY)
+		public void HandleCollision(ref Vector2 speed)
 		{
 			switch (collidableSides)
 			{
 			case Collidable.Bottom:
-				speedY = speedY < 0 ? -speedY : speedY;
+				speed.Y = speed.Y < 0 ? -speed.Y : speed.Y;
 				break;
 			case Collidable.BottomLeft:
-				speedX = speedX < 0 ? -speedX : speedX;
-				speedY = speedY < 0 ? -speedY : speedY;
+				speed.X = speed.X < 0 ? -speed.X : speed.X;
+				speed.Y = speed.Y < 0 ? -speed.Y : speed.Y;
 				break;
 			case Collidable.BottomRight:
-				speedX = speedX > 0 ? -speedX : speedX;
-				speedY = speedY < 0 ? -speedY : speedY;
+				speed.X = speed.X > 0 ? -speed.X : speed.X;
+				speed.Y = speed.Y < 0 ? -speed.Y : speed.Y;
 				break;
 			case Collidable.Left:
-				speedX = speedX < 0 ? -speedX : speedX;
+				speed.X = speed.X < 0 ? -speed.X : speed.X;
 				break;
 			case Collidable.None:
 				break;
 			case Collidable.Right:
-				speedX = speedX > 0 ? -speedX : speedX;
+				speed.X = speed.X > 0 ? -speed.X : speed.X;
 				break;
 			case Collidable.Top:
-				speedY = speedY > 0 ? -speedY : speedY;
+				speed.Y = speed.Y > 0 ? -speed.Y : speed.Y;
 				break;
 			case Collidable.TopLeft:
-				speedX = speedX < 0 ? -speedX : speedX;
-				speedY = speedY > 0 ? -speedY : speedY;
+				speed.X = speed.X < 0 ? -speed.X : speed.X;
+				speed.Y = speed.Y > 0 ? -speed.Y : speed.Y;
 				break;
 			case Collidable.TopRight:
-				speedX = speedX > 0 ? -speedX : speedX;
-				speedY = speedY > 0 ? -speedY : speedY;
+				speed.X = speed.X > 0 ? -speed.X : speed.X;
+				speed.Y = speed.Y > 0 ? -speed.Y : speed.Y;
 				break;
 			default:
 				break;
