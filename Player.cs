@@ -77,15 +77,8 @@ namespace PairedGame
 						if (t.Overlaps(this))
 						{
 							if (!MoveSpeed.IsZero()) t.HandleCollision(Position, ref MoveSpeed);
-							if (t.Key == 'Z') 
-							{
-								Vector2 p = new Vector2(); 
-								Sce.PlayStation.HighLevel.GameEngine2D.Scene s = Parent as Sce.PlayStation.HighLevel.GameEngine2D.Scene;
-							    //Tile.Loader("/Application/assets/level2.txt", ref p, s);
-							}
-								
+							if (t.Key == 'Z') Info.LevelClear = true;
 						}
-						
 					}
 				}
 			}

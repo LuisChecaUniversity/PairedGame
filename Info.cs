@@ -18,5 +18,9 @@ namespace PairedGame
 		public static Random Rnd { get { return rnd; } }
 		
 		public static float CameraHeight { get; set; }
+		
+		public static bool LevelClear { get; set; }
+		public static int LevelNumber { get; set; }
+		public static int MaxLevels { get { return 2; } }
 	}
 }
