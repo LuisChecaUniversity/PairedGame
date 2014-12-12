@@ -74,5 +74,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\level_key.txt" />
+    <None Include="assets\level2.txt" />
   </ItemGroup>
 </Project>
