@@ -17,19 +17,22 @@ namespace PairedGame
 			// Size and position
 			Position = position;
 			Quad.S = TextureInfo.TileSizeInPixelsf;
+			// Attach update function to scheduler
+			ScheduleUpdate();
 		}
 		
-		public Entity(Vector2i tileRange, Vector2 position): 
+		public Entity(int tileIndexY, Vector2i tileRangeX, Vector2 position, float interval=0.2f):
 			this(position)
 		{
-			// Create animation function. tileRange = { minTile1D, maxTile1D }
+			// Create animation function. tileRange = { xMinTile2D, xMaxTile2D }
+			TileIndex2D = new Vector2i(tileRangeX.X, tileIndexY);
 			ScheduleInterval( (dt) => {
 				if(IsAlive)
 				{
-					int tileIndex = TileIndex1D < tileRange.Y ? TileIndex1D + 1 : tileRange.X;
-					TileIndex1D = tileIndex;
+					int tileIndex = TileIndex2D.X < tileRangeX.Y ? TileIndex2D.X + 1 : tileRangeX.X;
+					TileIndex2D.X = tileIndex;
 				}
-			}, 0.2f);
+			}, interval);
 		}
 		
 		public Entity(int tileIndex, Vector2 position):

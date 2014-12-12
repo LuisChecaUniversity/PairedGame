@@ -1,5 +1,6 @@
 using System;
 using Sce.PlayStation.Core;
+using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace PairedGame
 {
@@ -26,24 +27,33 @@ namespace PairedGame
 	{
 		protected AttackStatus attackState = AttackStatus.None;
 		protected Statistics statistics = new Statistics();
+		protected Vector2 MoveSpeed = new Vector2();
+		protected Vector2i TileRangeX = new Vector2i();
 		
 		public EntityAlive(Vector2 position):
 			base(position)
 		{
-			// Attach update function to scheduler
-			ScheduleUpdate();
 		}
 		
-		public EntityAlive(Sce.PlayStation.HighLevel.GameEngine2D.Base.Vector2i tileRange, Vector2 position):
-			base(tileRange, position)
+		public EntityAlive(int tileIndexY, Vector2 position, Vector2i tileRangeX, float interval=0.2f):
+			base(position)
 		{
-			ScheduleUpdate();
+			// Assign variables
+			TileIndex2D = new Vector2i(tileRangeX.X, tileIndexY);
+			TileRangeX = tileRangeX;
+			// Attach custom animation function
+			ScheduleInterval( (dt) => {
+				if(IsAlive && !MoveSpeed.IsZero())
+				{
+					int tileIndex = TileIndex2D.X < TileRangeX.Y ? TileIndex2D.X + 1 : TileRangeX.X;
+					TileIndex2D.X = tileIndex;
+				}
+			}, interval);
 		}
 		
 		public EntityAlive(int tileIndex, Vector2 position):
 			base(tileIndex, position)
 		{
-			ScheduleUpdate();
 		}
 		
 		public Statistics Stats { get{ return statistics; } }
@@ -51,8 +61,11 @@ namespace PairedGame
 		override public void Update(float dt)
 		{
 			base.Update(dt);
+			// Reset variables
 			bool isDefending = false;
 			int damage = 0;
+			MoveSpeed = Vector2.Zero;
+			
 			switch(attackState)
 			{
 			case AttackStatus.None:
