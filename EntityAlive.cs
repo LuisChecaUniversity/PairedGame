@@ -20,7 +20,7 @@ namespace PairedGame
 		public int Defense = 100;
 		public int Attack = 100;
 		public int RangedAttack = 75;
-		public double Luck = GameInfo.Rnd.NextDouble();
+		public double Luck = Info.Rnd.NextDouble();
 	}
 	
 	public class EntityAlive: Entity
@@ -95,7 +95,7 @@ namespace PairedGame
 		
 		public AttackStatus RandomAttack()
 		{
-			AttackStatus attack = (AttackStatus)GameInfo.Rnd.Next(1, (int)AttackStatus.RangedStrong + 1);
+			AttackStatus attack = (AttackStatus)Info.Rnd.Next(1, (int)AttackStatus.RangedStrong + 1);
 			return attack;
 		}
 	}

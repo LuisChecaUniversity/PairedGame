@@ -2,7 +2,7 @@ using System;
 
 namespace PairedGame
 {
-	public static class GameInfo
+	public static class Info
 	{
 		private static Random rnd = new Random();
 		
