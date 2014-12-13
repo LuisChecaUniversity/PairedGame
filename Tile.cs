@@ -38,7 +38,7 @@ namespace PairedGame
 			case 'S': 
 				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), Info.Rnd.Next(1, 4));
 				break;
-			case 'X':
+			case 'H': case 'X':
 				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), Info.Rnd.Next(1, 4));
 				break;
 			case 'D':
@@ -193,6 +193,19 @@ namespace PairedGame
 						t.Occupier = e;
 						t.IsOccupied = true;
 					}
+					
+					if(c == 'H')
+					{
+						EntityAlive e = new EntityAlive(0, pos, new Vector2i(0, 1));
+						entities.AddChild(e);
+						t.Occupier = e;
+						t.IsOccupied = true;
+						e.Stats.Health = 500;
+						e.Stats.Lives = 5;
+						e.Stats.Defense = 100;
+						e.Stats.Attack = 300;
+					}
+					
 					// End col: Move to next tile "grid"
 					pos.X += Width;
 				}
