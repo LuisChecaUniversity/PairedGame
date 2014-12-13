@@ -16,11 +16,13 @@ namespace PairedGame
 		{
 			Initialize();
 			bool quitGame = false;
+			GamePadData gamePadData = GamePad.GetData(0);
 			
-			while (!quitGame) {
+			while(!quitGame)
+			{
 				SystemEvents.CheckEvents();	// We check system events (such as pressing PS button, pressing power button to sleep, major and unknown crash!!)				
 				Director.Instance.Update();
-				UISystem.Update(Touch.GetData(0)); // Update UI Manager
+				UISystem.Update(Touch.GetData(0), ref gamePadData); // Update UI Manager
 				Director.Instance.Render();
 				UISystem.Render(); // Render UI Manager
 				Director.Instance.GL.Context.SwapBuffers(); // Swap between back and front buffer
