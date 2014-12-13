@@ -112,7 +112,9 @@ namespace PairedGame
 							InBattle = false;
 							Opponent.InBattle = false;
 							Opponent.Opponent = null;
-							Opponent = null;						
+							Opponent = null;
+							Info.EnemiesKilled += 1;
+							Info.Reputation += 1;
 						}
 					}
 					if(t.Key == 'Z')

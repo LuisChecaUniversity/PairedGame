@@ -77,6 +77,7 @@ namespace PairedGame
 			{
 				if(--Stats.Lives <= 0)
 					IsAlive = false;
+				
 			}
 			
 			if(InBattle)

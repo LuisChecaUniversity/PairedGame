@@ -23,6 +23,8 @@ namespace PairedGame
 		public static float CameraHeight { get; set; }
 		
 		public static bool LevelClear { get; set; }
+		
+		public static int Reputation { get; set; }
 
 		public static int LevelNumber { get; set; }
 
