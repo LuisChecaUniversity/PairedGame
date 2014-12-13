@@ -24,6 +24,7 @@ namespace PairedGame
 		private Collidable collidableSides = Collidable.None;
 		public char Key;
 		public bool IsOccupied = false;
+		public EntityAlive Occupier = null;
 		
 		public Tile(char loadKey, Vector2 position): base()
 		{
@@ -173,32 +174,30 @@ namespace PairedGame
 						pos.X += Width;
 						continue;
 					}
-					// Make/add tile at x, y
+					// Make/add tile at pos
 					t = new Tile(c, pos);
 					scene.AddChild(t);
-					// Player start, store position
+					
+					// Player start, pass position
 					if(c == 'S')
-					{
 						playerPos = pos;
-					}
+					
 					// If floor, chance to spawn enemy
 					if(c == 'X' && Info.Rnd.Next(0, 11) == 1)
 					{
 						EntityAlive e = new EntityAlive(Info.Rnd.Next(1, 10), pos, new Vector2i(0, 1));
 						scene.AddChild(e);
+						t.Occupier = e;
 						t.IsOccupied = true;
 					}
 					// Move to next tile "grid"
 					pos.X += Width;
 				}
 				// End row: move y position to next tile row 
-				pos.Y += Height;
-			}
-			
-			if(!playerPos.IsZero())
-			{
-				// Player position has been set, add the player.
-				scene.AddChild(new Player(playerPos));
+				pos.Y += Height;	
+				// Player has position, add the player last
+				if(!playerPos.IsZero())
+					scene.AddChild(new Player(playerPos));
 			}
 		}
 	}

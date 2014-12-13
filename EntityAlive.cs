@@ -16,11 +16,12 @@ namespace PairedGame
 	public class Statistics
 	{
 		public int Health = 100;
-		public int Lives = 5;
-		public int Defense = 100;
+		public int Lives = 2;
+		public int Defense = 50;
 		public int Attack = 100;
 		public int RangedAttack = 75;
-		public double Luck = Info.Rnd.NextDouble();
+
+		public double Luck { get { return Info.Rnd.NextDouble() * (1 - 0.5) + 0.5; } }
 	}
 	
 	public class EntityAlive: Entity
@@ -29,6 +30,18 @@ namespace PairedGame
 		protected Statistics statistics = new Statistics();
 		protected Vector2 MoveSpeed = new Vector2();
 		protected Vector2i TileRangeX = new Vector2i();
+		
+		public Statistics Stats { get { return statistics; } }
+
+		public EntityAlive Opponent { get; set; }
+
+		public bool IsDefending { get; set; }
+
+		public bool InBattle { get; set; }
+
+		public int Damage { get { return CalculateDamage(attackState); } }
+
+		public int DamageReceived { get; protected set; }
 		
 		public EntityAlive(Vector2 position):
 			base(position)
@@ -42,8 +55,8 @@ namespace PairedGame
 			TileIndex2D = new Vector2i(tileRangeX.X, tileIndexY);
 			TileRangeX = tileRangeX;
 			// Attach custom animation function
-			ScheduleInterval( (dt) => {
-				if(IsAlive && !MoveSpeed.IsZero())
+			ScheduleInterval((dt) => {
+				if(IsAlive)
 				{
 					int tileIndex = TileIndex2D.X < TileRangeX.Y ? TileIndex2D.X + 1 : TileRangeX.X;
 					TileIndex2D.X = tileIndex;
@@ -56,20 +69,39 @@ namespace PairedGame
 		{
 		}
 		
-		public Statistics Stats { get{ return statistics; } }
-		
 		override public void Update(float dt)
 		{
-			base.Update(dt);
-			// Reset variables
-			bool isDefending = false;
-			int damage = 0;
 			MoveSpeed = Vector2.Zero;
+			// Run for dying
+			if(Stats.Health <= 0)
+			{
+				if(--Stats.Lives <= 0)
+					IsAlive = false;
+			}
 			
-			switch(attackState)
+			if(InBattle)
+			{
+				// Deal damage
+				if(Opponent != null)
+					Opponent.DamageReceived = Damage;
+				
+				// Take damage
+				if(DamageReceived != 0)
+					Stats.Health -= DamageReceived - (IsDefending ? Stats.Defense : 0);
+				
+				// Reset attack, defense
+				attackState = AttackStatus.None;
+				IsDefending = false;
+			}
+			base.Update(dt);
+		}
+		
+		private int CalculateDamage(AttackStatus attack)
+		{
+			int damage = 0;
+			switch(attack)
 			{
 			case AttackStatus.None:
-				isDefending = true;
 				break;
 			case AttackStatus.MeleeNormal:
 				damage = (int)(Stats.Attack * Stats.Luck);
@@ -86,11 +118,7 @@ namespace PairedGame
 			default:
 				break;
 			}
-			
-			if (isDefending)
-			{
-				Stats.Health -= System.Math.Abs(damage - Stats.Defense);
-			}
+			return damage;
 		}
 		
 		public AttackStatus RandomAttack()
