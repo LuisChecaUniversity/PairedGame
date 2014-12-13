@@ -19,42 +19,13 @@ namespace PairedGame
 		{
 			base.Update(dt);
 		
-			Info.TotalGameTime += dt;
-			
-	        var gamePadData = GamePad.GetData(0);
-
-	        int deltaSpeed = 2;
-			//Vector2 moveSpeed = new Vector2();
+			if (IsAlive) Info.TotalGameTime += dt;
 	
 			// Handle movement
-	        if((gamePadData.Buttons & GamePadButtons.Left) != 0)
-	        {
-                MoveSpeed.X = -deltaSpeed;
-				// Set animation range.
-				TileRangeX = new Vector2i(6, 7);
-	        }
-	        if((gamePadData.Buttons & GamePadButtons.Right) != 0)
-	        {
-                MoveSpeed.X = deltaSpeed;
-				TileRangeX = new Vector2i(4, 5);
-	        }
-	        if((gamePadData.Buttons & GamePadButtons.Up) != 0)
-	        {
-                MoveSpeed.Y = deltaSpeed;
-				TileRangeX = new Vector2i(2, 3);
-	        }
-	        if((gamePadData.Buttons & GamePadButtons.Down) != 0)
-	        {
-                MoveSpeed.Y = -deltaSpeed;
-				TileRangeX = new Vector2i(0, 1);
-	        }
-			
-			// Set frame to start of animation range if outside of range
-			if(TileIndex2D.X < TileRangeX.X || TileIndex2D.X > TileRangeX.Y)
-				TileIndex2D.X = TileRangeX.X;
+			HandleInput();			
 			
 			// Find current tile and apply collision
-			CollideWithTiles(ref MoveSpeed);
+			HandleCollision();
 			
 			// Apply the movement
 			Position = Position + MoveSpeed;
@@ -62,24 +33,49 @@ namespace PairedGame
 			Parent.Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Position);			
 		}
 		
-		private void CollideWithTiles(ref Vector2 moveSpeed)
+		private static float MoveDelta = 2f;
+		
+		private void HandleInput()
+		{
+	        var gamePadData = GamePad.GetData(0);
+			// Apply direction and animation
+	        if((gamePadData.Buttons & GamePadButtons.Left) != 0)
+	        {
+                MoveSpeed.X = -MoveDelta;
+				// Set animation range.
+				TileRangeX = new Vector2i(6, 7);
+	        }
+	        if((gamePadData.Buttons & GamePadButtons.Right) != 0)
+	        {
+                MoveSpeed.X = MoveDelta;
+				TileRangeX = new Vector2i(4, 5);
+	        }
+	        if((gamePadData.Buttons & GamePadButtons.Up) != 0)
+	        {
+                MoveSpeed.Y = MoveDelta;
+				TileRangeX = new Vector2i(2, 3);
+	        }
+	        if((gamePadData.Buttons & GamePadButtons.Down) != 0)
+	        {
+                MoveSpeed.Y = -MoveDelta;
+				TileRangeX = new Vector2i(0, 1);
+	        }
+			// Set frame to start of animation range if outside of range
+			if(TileIndex2D.X < TileRangeX.X || TileIndex2D.X > TileRangeX.Y)
+				TileIndex2D.X = TileRangeX.X;
+		}
+		
+		private void HandleCollision()
 		{
 			if (SceneManager.CurrentScene == null)
 				return;
-			
-			foreach (var child in SceneManager.CurrentScene.Children)
+			// Loop through tiles
+			foreach (Tile t in SceneManager.CurrentScene.Children.FindAll(x => x is Tile))
 			{
-				if (child != this)
+				if (t.Overlaps(this))
 				{
-					Tile t = child as Tile;
-					if (t != null)
-					{
-						if (t.Overlaps(this))
-						{
-							if (!MoveSpeed.IsZero()) t.HandleCollision(Position, ref MoveSpeed);
-							if (t.Key == 'Z') Info.LevelClear = true;
-						}
-					}
+					if (!MoveSpeed.IsZero()) t.HandleCollision(Position, ref MoveSpeed);
+					if (t.Key == 'Z') Info.LevelClear = true;
 				}
 			}
 		}
