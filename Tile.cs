@@ -24,6 +24,7 @@ namespace PairedGame
 		private Collidable collidableSides = Collidable.None;
 		public char Key;
 		public bool IsOccupied = false;
+		public bool IsBoss = false;
 		public EntityAlive Occupier = null;
 		
 		public Tile(char loadKey, Vector2 position): base()
@@ -38,7 +39,8 @@ namespace PairedGame
 			case 'S': 
 				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), Info.Rnd.Next(1, 4));
 				break;
-			case 'H': case 'X':
+			case 'H':
+			case 'X':
 				TileIndex2D = new Vector2i(Info.Rnd.Next(1, 4), Info.Rnd.Next(1, 4));
 				break;
 			case 'D':
@@ -108,7 +110,7 @@ namespace PairedGame
 			bool collisionBottom = pos.Y < Position.Y + offset && speed.Y < 0;
 			
 			// Immediately collide if tile is occupied
-			if(IsOccupied)
+			if(IsOccupied || IsBoss)
 			{
 				speed *= factor;
 				return;
@@ -199,11 +201,13 @@ namespace PairedGame
 						EntityAlive e = new EntityAlive(0, pos, new Vector2i(0, 1));
 						entities.AddChild(e);
 						t.Occupier = e;
+						t.IsBoss = true;
 						t.IsOccupied = true;
-						e.Stats.Health = 500;
+						e.Stats.Health = 200;
 						e.Stats.Lives = 5;
 						e.Stats.Defense = 100;
-						e.Stats.Attack = 300;
+						e.Stats.Attack = 30;
+						e.Stats.RangedAttack = 20;
 					}
 					
 					// End col: Move to next tile "grid"

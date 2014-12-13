@@ -49,6 +49,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="Info.cs" />
+    <Compile Include="Conversation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -73,6 +74,7 @@
     </Content>
     <Content Include="assets\level2.txt" />
     <Content Include="assets\level3.txt" />
+    <Content Include="assets\miniboss1.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\level_key.txt" />

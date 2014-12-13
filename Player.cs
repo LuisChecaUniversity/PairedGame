@@ -98,7 +98,14 @@ namespace PairedGame
 						t.HandleCollision(Position, ref MoveSpeed);
 					if(t.IsOccupied)
 					{
-						if(t.Occupier.IsAlive)
+						if(t.IsBoss && !Info.InBattle)
+						{
+							if(!Info.HadConversation)
+							{
+								SceneManager.ReplaceUIScene(new Conversation());
+								SceneManager.PauseScene();
+							}
+						} else if(t.Occupier.IsAlive)
 						{
 							Opponent = t.Occupier;
 							Opponent.Opponent = this;

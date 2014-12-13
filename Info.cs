@@ -31,5 +31,7 @@ namespace PairedGame
 		public static int MaxLevels { get { return 3; } }
 		
 		public static bool InBattle { get; set; }
+		
+		public static bool HadConversation { get; set; }
 	}
 }

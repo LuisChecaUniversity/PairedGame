@@ -23,6 +23,7 @@ namespace PairedGame
 			Info.CameraHeight = 200f;
 			Info.LevelClear = false;
 			Info.InBattle = false;
+			Info.HadConversation = false;
 			Vector2 cameraCentre = new Vector2();
 			// Load level layout from file
 			Tile.Loader("/Application/assets/level" + level.ToString() + ".txt", ref cameraCentre, this);

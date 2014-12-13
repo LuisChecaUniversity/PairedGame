@@ -4,14 +4,15 @@ namespace PairedGame
 {
 	public sealed class SceneManager
 	{
-		private SceneManager() {}
-		//private static readonly SceneManager _instance = new SceneManager();
-		//public static SceneManager Instance { get{ return _instance; } }
+		private SceneManager()
+		{
+		}
 		
 		public static Sce.PlayStation.HighLevel.GameEngine2D.Scene CurrentScene
 		{
 			get{ return Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene; } 
 		}
+
 		public static void ReplaceScene(Sce.PlayStation.HighLevel.GameEngine2D.Scene scene)
 		{
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.ReplaceScene(scene);
@@ -21,9 +22,20 @@ namespace PairedGame
 		{
 			get{ return Sce.PlayStation.HighLevel.UI.UISystem.CurrentScene; } 
 		}
+
 		public static void ReplaceUIScene(Sce.PlayStation.HighLevel.UI.Scene scene)
 		{
 			Sce.PlayStation.HighLevel.UI.UISystem.SetScene(scene);
+		}
+		
+		public static void PauseScene()
+		{
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Pause();
+		}
+		
+		public static void ResumeScene()
+		{
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Resume();
 		}
 	}
 }

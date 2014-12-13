@@ -1,0 +1,17 @@
+"What have we here? Another misguided soul desperate to die? Tell me boy, why did you enter this place?"
+
+Player Right "I came to seek my fortune"
+Player "I am here to destroy all evil"
+Player "I am here to tell you the ugly store called and they are all out of you"
+
+Boss "A reason I hear from every adventurer that comes along, what makes you so different from all of them?"
+Boss "I suppose that means me too?, hit me with your best then!"
+Boss "Ha a live one! I'm going to enjoy crushing you!"
+
+Player "I have all the strength and fortitude I need to conquer this wretched place"
+Player Right "Because I'm going to make clear and rational decisions, may I please pass?"
+Player "Well your mother said i was the best adventurer she ever had"
+
+Boss "Oho is that so?, then show me the peak of your strength, don't hold back"
+Boss Right "Well... A kind-mannered, rational adventurer? That is indeed a rare sight! Very well you may pass and the best of luck to you"
+Boss "How ... How dare you!? That woman is a saint! Time to teach you some manners you ruffian!"
