@@ -84,7 +84,20 @@ namespace PairedGame
 			{
 				// Deal damage
 				if(Opponent != null)
+				{
 					Opponent.DamageReceived = Damage;
+					// Enemy killed
+					if(!Opponent.IsAlive)
+					{
+						Info.InBattle = false;
+						InBattle = false;
+						Opponent.InBattle = false;
+						Opponent.Opponent = null;
+						Opponent = null;
+						Info.EnemiesKilled += 1;
+						Info.Reputation += 1;
+					}
+				}
 				
 				// Take damage
 				if(DamageReceived != 0)
