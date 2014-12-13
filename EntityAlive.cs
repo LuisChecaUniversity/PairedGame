@@ -17,9 +17,9 @@ namespace PairedGame
 	{
 		public int Health = 100;
 		public int Lives = 2;
-		public int Defense = 50;
-		public int Attack = 100;
-		public int RangedAttack = 75;
+		public int Defense = 100;
+		public int Attack = 20;
+		public int RangedAttack = 15;
 
 		public double Luck { get { return Info.Rnd.NextDouble() * (1 - 0.5) + 0.5; } }
 	}
@@ -54,6 +54,7 @@ namespace PairedGame
 			// Assign variables
 			TileIndex2D = new Vector2i(tileRangeX.X, tileIndexY);
 			TileRangeX = tileRangeX;
+			IsDefending = true;
 			// Attach custom animation function
 			ScheduleInterval((dt) => {
 				if(IsAlive)
@@ -62,6 +63,15 @@ namespace PairedGame
 					TileIndex2D.X = tileIndex;
 				}
 			}, interval);
+			
+			// Attach attack timer
+			if(this.GetType() == typeof(EntityAlive))
+			{
+				ScheduleInterval((dt) => {
+					if(InBattle)
+						attackState = RandomAttack();
+				}, 2f);
+			}
 		}
 		
 		public EntityAlive(int tileIndex, Vector2 position):
@@ -72,12 +82,11 @@ namespace PairedGame
 		override public void Update(float dt)
 		{
 			MoveSpeed = Vector2.Zero;
-			// Run for dying
+			// Dying
 			if(Stats.Health <= 0)
 			{
 				if(--Stats.Lives <= 0)
 					IsAlive = false;
-				
 			}
 			
 			if(InBattle)
@@ -100,12 +109,19 @@ namespace PairedGame
 				}
 				
 				// Take damage
-				if(DamageReceived != 0)
-					Stats.Health -= DamageReceived - (IsDefending ? Stats.Defense : 0);
-				
+				if(DamageReceived > 0)
+				{
+					if(IsDefending && Stats.Defense > 0 && DamageReceived <= Stats.Defense)
+						Stats.Defense -= DamageReceived;
+					else
+						Stats.Health -= DamageReceived;
+					
+					DamageReceived = 0;
+				}
 				// Reset attack, defense
 				attackState = AttackStatus.None;
-				IsDefending = false;
+				if(IsDefending && this.GetType() == typeof(Player))
+					IsDefending = false;
 			}
 			base.Update(dt);
 		}
