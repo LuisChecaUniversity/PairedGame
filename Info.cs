@@ -21,6 +21,6 @@ namespace PairedGame
 		
 		public static bool LevelClear { get; set; }
 		public static int LevelNumber { get; set; }
-		public static int MaxLevels { get { return 2; } }
+		public static int MaxLevels { get { return 3; } }
 	}
 }

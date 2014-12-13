@@ -72,8 +72,12 @@
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
     </Content>
     <Content Include="assets\level2.txt" />
+    <Content Include="assets\level3.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\level_key.txt" />
+    <None Include="assets\level4.txt" />
+    <None Include="assets\level5.txt" />
+    <None Include="assets\BonusLevel.txt" />
   </ItemGroup>
 </Project>
