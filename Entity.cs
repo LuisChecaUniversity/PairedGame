@@ -29,10 +29,9 @@ namespace PairedGame
 		
 		override public void Update(float dt)
 		{
-			base.Update(dt);
-			if(!IsAlive)
+			if(!IsAlive && Parent != null)
 				Parent.RemoveChild(this, true);
+			base.Update(dt);
 		}
-		
 	}
 }

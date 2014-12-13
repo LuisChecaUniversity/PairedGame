@@ -32,7 +32,8 @@ namespace PairedGame
 			// Apply the movement
 			Position = Position + MoveSpeed;
 			// Make camera follow the player
-			Parent.Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Position);			
+			if(Parent != null)
+				Parent.Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Position);			
 		}
 		
 		private static float MoveDelta = 2f;
