@@ -110,7 +110,7 @@ namespace PairedGame
 			// Immediately collide if tile is occupied
 			if(IsOccupied)
 			{
-				speed *= factor - 1;
+				speed *= factor;
 				return;
 			}
 			switch(collidableSides)
@@ -158,8 +158,11 @@ namespace PairedGame
 			Vector2 pos = Vector2.Zero;
 			Tile t = null;
 			
-			// Read whole level files
+			// Read whole level files to lines
 			var lines = System.IO.File.ReadAllLines(filepath);
+			// Make SpriteLists to improve efficiency
+			var tiles = new SpriteList(TextureManager.Get("tiles"));
+			var entities = new SpriteList(TextureManager.Get("entities"));
 			// Iterate end to start, line by line
 			for(int i = lines.Length - 1; i >= 0; i--)
 			{
@@ -176,7 +179,7 @@ namespace PairedGame
 					}
 					// Make/add tile at pos
 					t = new Tile(c, pos);
-					scene.AddChild(t);
+					tiles.AddChild(t);
 					
 					// Player start, pass position
 					if(c == 'S')
@@ -186,19 +189,23 @@ namespace PairedGame
 					if(c == 'X' && Info.Rnd.Next(0, 11) == 1)
 					{
 						EntityAlive e = new EntityAlive(Info.Rnd.Next(1, 10), pos, new Vector2i(0, 1));
-						scene.AddChild(e);
+						entities.AddChild(e);
 						t.Occupier = e;
 						t.IsOccupied = true;
 					}
-					// Move to next tile "grid"
+					// End col: Move to next tile "grid"
 					pos.X += Width;
 				}
-				// End row: move y position to next tile row 
-				pos.Y += Height;	
-				// Player has position, add the player last
-				if(!playerPos.IsZero())
-					scene.AddChild(new Player(playerPos));
+				// End row: Move y position to next tile row 
+				pos.Y += Height;
 			}
+			// Add Tiles to Scene
+			scene.AddChild(tiles);
+			// Add Entites to Scene
+			scene.AddChild(entities);
+			// Player has position, add player last to scene
+			if(!playerPos.IsZero())
+				scene.AddChild(new Player(playerPos));
 		}
 	}
 }

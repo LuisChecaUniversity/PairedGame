@@ -12,12 +12,11 @@ namespace PairedGame
 		public Player(Vector2 position):
 			base(PLAYER_INDEX, position, new Vector2i(0, 1))
 		{
-
+			IsDefending = false;
 		}
 		
 		override public void Update(float dt)
 		{
-		
 			if(IsAlive)
 				Info.TotalGameTime += dt;
 	
@@ -90,7 +89,7 @@ namespace PairedGame
 			if(SceneManager.CurrentScene == null)
 				return;
 			// Loop through tiles
-			foreach(Tile t in SceneManager.CurrentScene.Children.FindAll(x => x is Tile))
+			foreach(Tile t in SceneManager.CurrentScene.Children[0].Children)
 			{
 				if(t.Overlaps(this))
 				{
@@ -108,6 +107,11 @@ namespace PairedGame
 						} else
 						{
 							t.IsOccupied = false;
+							Opponent = null;
+							t.Occupier.Opponent = null;
+							t.Occupier.InBattle = false;
+							InBattle = false;
+							Info.InBattle = false;
 						}
 					}
 					if(t.Key == 'Z')
