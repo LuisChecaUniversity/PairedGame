@@ -5,10 +5,6 @@ namespace PairedGame
 {
 	public class GameUI: Scene
 	{
-		private static string LevelText { get { return "Level " + Info.LevelNumber.ToString(); } }
-
-		private static string ScoreText { get { return "Reputation " + Info.Reputation.ToString(); } }
-
 		private static Label level = new Label();
 		private static Label score = new Label();
 		
@@ -22,7 +18,6 @@ namespace PairedGame
 			level.TextShadow = new TextShadowSettings();
 			level.TextShadow.Color = new UIColor(0.2f, 0.2f, 0.2f, 1f);
 			level.TextTrimming = TextTrimming.None;
-			level.Text = LevelText;
 			RootWidget.AddChildLast(level);
 			
 			score = new Label();
@@ -31,15 +26,14 @@ namespace PairedGame
 			score.TextShadow = new TextShadowSettings();
 			score.TextShadow.Color = new UIColor(0.2f, 0.2f, 0.2f, 1f);
 			score.TextTrimming = TextTrimming.None;
-			score.Text = ScoreText;
 			RootWidget.AddChildLast(score);
 		}
 
 		override protected void OnUpdate(float dt)
 		{
 			base.OnUpdate(dt);
-			level.Text = LevelText;
-			score.Text = ScoreText;
+			level.Text = "Level " + Info.LevelNumber.ToString();
+			score.Text = "Reputation " + Info.Reputation.ToString();
 		}
 	}
 }
