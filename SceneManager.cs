@@ -27,6 +27,8 @@ namespace PairedGame
 		{
 			if(scene == null)
 				Sce.PlayStation.HighLevel.UI.UISystem.PopScene();
+			else if(CurrentUIScene.GetType() == scene.GetType())
+				return;
 			else
 				Sce.PlayStation.HighLevel.UI.UISystem.PushScene(scene);
 		}
