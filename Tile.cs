@@ -151,9 +151,9 @@ namespace PairedGame
 			}
 		}
 		
-		public static int Height { get { return 16; } }
+		public static int Height { get { return 32; } }
 
-		public static int Width { get { return 16; } }
+		public static int Width { get { return 32; } }
 		
 		public static void Loader(string filepath, ref Vector2 playerPos, Scene scene)
 		{
@@ -198,7 +198,7 @@ namespace PairedGame
 					
 					if(c == 'H')
 					{
-						EntityAlive e = new EntityAlive(0, pos, new Vector2i(0, 1));
+						EntityAlive e = new EntityAlive(new Vector2i(Info.Rnd.Next(6), 13), pos);
 						entities.AddChild(e);
 						t.Occupier = e;
 						t.IsBoss = true;

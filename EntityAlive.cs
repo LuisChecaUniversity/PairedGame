@@ -46,24 +46,8 @@ namespace PairedGame
 		public EntityAlive(Vector2 position):
 			base(position)
 		{
-		}
-		
-		public EntityAlive(int tileIndexY, Vector2 position, Vector2i tileRangeX, float interval=0.2f):
-			base(position)
-		{
-			// Assign variables
-			TileIndex2D = new Vector2i(tileRangeX.X, tileIndexY);
-			TileRangeX = tileRangeX;
+			// NPCs block by default
 			IsDefending = true;
-			// Attach custom animation function
-			ScheduleInterval((dt) => {
-				if(IsAlive)
-				{
-					int tileIndex = TileIndex2D.X < TileRangeX.Y ? TileIndex2D.X + 1 : TileRangeX.X;
-					TileIndex2D.X = tileIndex;
-				}
-			}, interval);
-			
 			// Attach attack timer
 			if(this.GetType() == typeof(EntityAlive))
 			{
@@ -74,9 +58,26 @@ namespace PairedGame
 			}
 		}
 		
-		public EntityAlive(int tileIndex, Vector2 position):
-			base(tileIndex, position)
+		public EntityAlive(int tileIndexY, Vector2 position, Vector2i tileRangeX, float interval=0.2f):
+			this(position)
 		{
+			// Assign variables
+			TileIndex2D = new Vector2i(tileRangeX.X, tileIndexY);
+			TileRangeX = tileRangeX;
+			// Attach custom animation function
+			ScheduleInterval((dt) => {
+				if(IsAlive)
+				{
+					int tileIndex = TileIndex2D.X < TileRangeX.Y ? TileIndex2D.X + 1 : TileRangeX.X;
+					TileIndex2D.X = tileIndex;
+				}
+			}, interval);
+		}
+		
+		public EntityAlive(Vector2i tileIndex2D, Vector2 position):
+			this(position)
+		{
+			TileIndex2D = tileIndex2D;
 		}
 		
 		override public void Update(float dt)

@@ -42,7 +42,7 @@ namespace PairedGame
 			TextureManager.AddAsset("tiles", new TextureInfo(new Texture2D("/Application/assets/dungeon_tiles.png", false),
 			                                                 new Vector2i(21, 5)));
 			TextureManager.AddAsset("entities", new TextureInfo(new Texture2D("/Application/assets/dungeon_objects.png", false),
-			                                                 new Vector2i(9, 13)));
+			                                                 new Vector2i(9, 14)));
 			// Tell the UISystem to run an empty scene
 			UISystem.SetScene(new Sce.PlayStation.HighLevel.UI.Scene(), null);
 			Director.Instance.RunWithScene(new CrawlerScreen(), true);
