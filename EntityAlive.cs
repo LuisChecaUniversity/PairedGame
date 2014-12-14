@@ -15,6 +15,7 @@ namespace PairedGame
 	
 	public class Statistics
 	{
+		public int MaxHealth = 100;
 		public int Health = 100;
 		public int Lives = 2;
 		public int Defense = 100;
@@ -27,11 +28,11 @@ namespace PairedGame
 	public class EntityAlive: Entity
 	{
 		protected AttackStatus attackState = AttackStatus.None;
-		protected Statistics statistics = new Statistics();
+		protected Statistics stats = new Statistics();
 		protected Vector2 MoveSpeed = new Vector2();
 		protected Vector2i TileRangeX = new Vector2i();
 		
-		public Statistics Stats { get { return statistics; } }
+		public Statistics Stats { get { return stats; } }
 
 		public EntityAlive Opponent { get; set; }
 
@@ -71,8 +72,11 @@ namespace PairedGame
 					int tileIndex = TileIndex2D.X < TileRangeX.Y ? TileIndex2D.X + 1 : TileRangeX.X;
 					TileIndex2D.X = tileIndex;
 				}
-				else					
+				else
+				{
 					TileIndex2D.X = TextureInfo.NumTiles.X - 1;
+					UnscheduleUpdate();
+				}
 			}, interval);
 		}
 		
@@ -86,9 +90,11 @@ namespace PairedGame
 		{
 			MoveSpeed = Vector2.Zero;
 			// Dying
-			if(Stats.Health <= 0)
+			if(stats.Health <= 0)
 			{
-				if(--Stats.Lives <= 0)
+				stats.Health = stats.MaxHealth;
+				stats.Lives--;
+				if(stats.Lives <= 0)
 					IsAlive = false;
 			}
 			// Fight!
@@ -115,10 +121,10 @@ namespace PairedGame
 				// Take damage
 				if(DamageReceived > 0)
 				{
-					if(IsDefending && Stats.Defense > 0 && DamageReceived <= Stats.Defense)
-						Stats.Defense -= DamageReceived;
+					if(IsDefending && stats.Defense > 0 && DamageReceived <= stats.Defense)
+						stats.Defense -= DamageReceived;
 					else
-						Stats.Health -= DamageReceived;
+						stats.Health -= DamageReceived;
 					
 					DamageReceived = 0;
 				}
@@ -136,16 +142,16 @@ namespace PairedGame
 			case AttackStatus.None:
 				break;
 			case AttackStatus.MeleeNormal:
-				damage = (int)(Stats.Attack * Stats.Luck);
+				damage = (int)(stats.Attack * stats.Luck);
 				break;
 			case AttackStatus.MeleeStrong:
-				damage = (int)(Stats.Attack * Stats.Luck * 1.15);
+				damage = (int)(stats.Attack * stats.Luck * 1.15);
 				break;
 			case AttackStatus.RangedNormal:
-				damage = (int)(Stats.RangedAttack * Stats.Luck);
+				damage = (int)(stats.RangedAttack * stats.Luck);
 				break;
 			case AttackStatus.RangedStrong:
-				damage = (int)(Stats.RangedAttack * Stats.Luck * 1.15);
+				damage = (int)(stats.RangedAttack * stats.Luck * 1.15);
 				break;
 			default:
 				break;
