@@ -13,7 +13,7 @@ namespace PairedGame
 			base(PLAYER_INDEX, position, new Vector2i(0, 1))
 		{
 			IsDefending = false;
-			Stats.Lives = 3;
+			Stats.Lives = 5;
 		}
 		
 		override public void Update(float dt)
