@@ -54,7 +54,11 @@ namespace PairedGame
 			{
 				ScheduleInterval((dt) => {
 					if(InBattle)
+					{
 						attackState = RandomAttack();
+						if(Info.Rnd.NextDouble() <= 0.1)
+							IsDefending = true;
+					}
 				}, 2f);
 			}
 		}
@@ -130,6 +134,7 @@ namespace PairedGame
 				}
 				// Reset attack, defense
 				attackState = AttackStatus.None;
+				IsDefending = false;
 			}
 			base.Update(dt);
 		}

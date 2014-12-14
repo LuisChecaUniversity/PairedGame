@@ -84,6 +84,11 @@ namespace PairedGame
 				{
 					attackState = AttackStatus.RangedStrong;
 				}
+				
+				if((gamePadData.ButtonsDown & GamePadButtons.L) != 0)
+				{
+					IsDefending = true;
+				}
 			}
 			// Set frame to start of animation range if outside of range
 			if(TileIndex2D.X < TileRangeX.X || TileIndex2D.X > TileRangeX.Y)
