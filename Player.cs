@@ -13,6 +13,7 @@ namespace PairedGame
 			base(PLAYER_INDEX, position, new Vector2i(0, 1))
 		{
 			IsDefending = false;
+			Stats.Lives = 5;
 		}
 		
 		override public void Update(float dt)
@@ -65,21 +66,24 @@ namespace PairedGame
 				TileRangeX = new Vector2i(0, 1);
 			}
 			// Attacks if in battle
-			if((gamePadData.Buttons & GamePadButtons.Cross) != 0 && InBattle)
+			if(InBattle)
 			{
-				attackState = AttackStatus.MeleeNormal;
-			}
-			if((gamePadData.Buttons & GamePadButtons.Circle) != 0 && InBattle)
-			{
-				attackState = AttackStatus.MeleeStrong;
-			}
-			if((gamePadData.Buttons & GamePadButtons.Square) != 0 && InBattle)
-			{
-				attackState = AttackStatus.RangedNormal;
-			}
-			if((gamePadData.Buttons & GamePadButtons.Triangle) != 0 && InBattle)
-			{
-				attackState = AttackStatus.RangedStrong;
+				if((gamePadData.ButtonsDown & GamePadButtons.Cross) != 0)
+				{
+					attackState = AttackStatus.MeleeNormal;
+				}
+				if((gamePadData.ButtonsDown & GamePadButtons.Circle) != 0)
+				{
+					attackState = AttackStatus.MeleeStrong;
+				}
+				if((gamePadData.ButtonsDown & GamePadButtons.Square) != 0)
+				{
+					attackState = AttackStatus.RangedNormal;
+				}
+				if((gamePadData.ButtonsDown & GamePadButtons.Triangle) != 0)
+				{
+					attackState = AttackStatus.RangedStrong;
+				}
 			}
 			// Set frame to start of animation range if outside of range
 			if(TileIndex2D.X < TileRangeX.X || TileIndex2D.X > TileRangeX.Y)
