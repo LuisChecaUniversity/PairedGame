@@ -31,5 +31,17 @@ namespace PairedGame
 		{
 			base.Update(dt);
 		}
+		
+		private static float boundsScale = 0.7f;
+		
+		public bool Overlaps(SpriteBase sprite)
+		{
+			Bounds2 otherBounds = new Bounds2();
+			Bounds2 thisBounds = new Bounds2();
+			sprite.GetContentWorldBounds(ref otherBounds);
+			GetContentWorldBounds(ref thisBounds);
+			thisBounds = thisBounds.Scale(new Vector2(boundsScale, boundsScale), thisBounds.Center);
+			return thisBounds.Overlaps(otherBounds);
+		}
 	}
 }

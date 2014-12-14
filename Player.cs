@@ -18,11 +18,13 @@ namespace PairedGame
 		
 		override public void Update(float dt)
 		{
-			if(IsAlive)
-				Info.TotalGameTime += dt;
 	
 			// Handle battle
 			base.Update(dt);
+			
+			// Handle Death
+			if(!IsAlive)
+				SceneManager.ReplaceUIScene(new DeadUI());
 			
 			// Handle movement/attacks
 			HandleInput();
@@ -106,38 +108,45 @@ namespace PairedGame
 				{
 					if(!MoveSpeed.IsZero())
 						t.HandleCollision(Position, ref MoveSpeed);
-					if(t.IsOccupied)
-					{
-						if(t.IsBoss && !Info.InBattle)
-						{
-							if(!Info.HadConversation)
-							{
-								SceneManager.ReplaceUIScene(new Conversation());
-								SceneManager.PauseScene();
-							}
-						}
-						else if(t.Occupier.IsAlive)
-						{
-							Opponent = t.Occupier;
-							Opponent.Opponent = this;
-							Opponent.InBattle = true;
-							if(!InBattle)
-								SceneManager.ReplaceUIScene(new FightUI(this, Opponent));
-							InBattle = true;
-							Info.InBattle = true;
-						}
-						else
-						{
-							t.IsOccupied = false;
-							Opponent = null;
-							t.Occupier.Opponent = null;
-							t.Occupier.InBattle = false;
-							InBattle = false;
-							Info.InBattle = false;
-						}
-					}
+					
 					if(t.Key == 'Z')
 						Info.LevelClear = true;
+				}
+			}
+			
+			foreach(EntityAlive e in SceneManager.CurrentScene.Children[1].Children)
+			{
+				if(e.Overlaps(this) && e.IsAlive)
+				{
+					if(!MoveSpeed.IsZero() && e.IsCollidable)
+						MoveSpeed *= -1f;
+					
+					if(e.IsBoss && !Info.InBattle)
+					{
+						if(!Info.HadConversation)
+						{
+							SceneManager.ReplaceUIScene(new Conversation());
+							SceneManager.PauseScene();
+						}
+					}
+					else if(e.IsAlive)
+					{
+						Opponent = e;
+						Opponent.Opponent = this;
+						Opponent.InBattle = true;
+						if(!InBattle)
+							SceneManager.ReplaceUIScene(new FightUI(this, Opponent));
+						InBattle = true;
+						Info.InBattle = true;
+					}
+					else
+					{
+						Opponent = null;
+						e.Opponent = null;
+						e.InBattle = false;
+						InBattle = false;
+						Info.InBattle = false;
+					}
 				}
 			}
 		}

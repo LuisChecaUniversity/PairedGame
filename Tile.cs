@@ -23,15 +23,13 @@ namespace PairedGame
 	{
 		private Collidable collidableSides = Collidable.None;
 		public char Key;
-		public bool IsOccupied = false;
-		public bool IsBoss = false;
-		public EntityAlive Occupier = null;
 		
 		public Tile(char loadKey, Vector2 position): base()
 		{
 			TextureInfo = TextureManager.Get("tiles");
 			Position = position;
 			Quad.S = TextureInfo.TileSizeInPixelsf;
+			// Reset variables
 			Key = loadKey;
 			// Based on loadKey set Tile to draw and its collision.
 			switch(loadKey)
@@ -109,12 +107,6 @@ namespace PairedGame
 			bool collisionTop = pos.Y + Height > Position.Y + Height - offset && speed.Y > 0;
 			bool collisionBottom = pos.Y < Position.Y + offset && speed.Y < 0;
 			
-			// Immediately collide if tile is occupied
-			if(IsOccupied)
-			{
-				speed *= factor;
-				return;
-			}
 			switch(collidableSides)
 			{
 			case Collidable.Bottom:
@@ -192,17 +184,13 @@ namespace PairedGame
 					{
 						EntityAlive e = new EntityAlive(Info.Rnd.Next(1, 10), pos, new Vector2i(0, 1));
 						entities.AddChild(e);
-						t.Occupier = e;
-						t.IsOccupied = true;
 					}
 					
 					if(c == 'H')
 					{
-						EntityAlive e = new EntityAlive(new Vector2i(Info.Rnd.Next(6), 13), pos);
+						EntityAlive e = new EntityAlive(new Vector2i(Info.Rnd.Next(5), 13), pos);
 						entities.AddChild(e);
-						t.Occupier = e;
-						t.IsBoss = true;
-						t.IsOccupied = true;
+						e.IsBoss = true;
 						e.Stats.Health = 200;
 						e.Stats.Lives = 5;
 						e.Stats.Defense = 100;

@@ -35,6 +35,10 @@ namespace PairedGame
 		public Statistics Stats { get { return stats; } }
 
 		public EntityAlive Opponent { get; set; }
+		
+		public bool IsCollidable { get; set; }
+		
+		public bool IsBoss { get; set; }
 
 		public bool IsDefending { get; set; }
 
@@ -47,6 +51,10 @@ namespace PairedGame
 		public EntityAlive(Vector2 position):
 			base(position)
 		{
+			// Collidable by default
+			IsCollidable = true;
+			// Not a boss by default
+			IsBoss = false;
 			// NPCs don't block by default
 			IsDefending = false;
 			// Attach attack timer
