@@ -52,6 +52,7 @@
     <Compile Include="Conversation.cs" />
     <Compile Include="GameUI.cs" />
     <Compile Include="FightUI.cs" />
+    <Compile Include="DeadUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -77,7 +78,7 @@
     <Content Include="assets\vita_square.png" />
     <Content Include="assets\vita_triangle.png" />
     <Content Include="assets\green.png" />
-    <Content Include="assets\level1.txt"/>
+    <Content Include="assets\level1.txt" />
     <Content Include="assets\level2.txt" />
     <Content Include="assets\level3.txt" />
     <Content Include="assets\miniboss1.txt" />

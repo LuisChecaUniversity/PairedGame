@@ -67,7 +67,7 @@ namespace PairedGame
 						if(Info.Rnd.NextDouble() <= 0.1)
 							IsDefending = true;
 					}
-				}, 2f);
+				}, 1f);
 			}
 		}
 		
@@ -124,9 +124,10 @@ namespace PairedGame
 						Opponent.InBattle = false;
 						Opponent.Opponent = null;
 						Opponent = null;
-						SceneManager.ReplaceUIScene();
 						Info.EnemiesKilled += 1;
 						Info.Reputation += 1;
+						if(SceneManager.CurrentUIScene is FightUI)
+							SceneManager.ReplaceUIScene();
 					}
 				}
 				

@@ -43,6 +43,10 @@ namespace PairedGame
 			                                                 new Vector2i(21, 5)));
 			TextureManager.AddAsset("entities", new TextureInfo(new Texture2D("/Application/assets/dungeon_objects.png", false),
 			                                                 new Vector2i(9, 14)));
+			// Initial Values;
+			Info.TotalGameTime = 0f;
+			Info.LevelNumber = 1;
+			
 			// Tell the UISystem to run an empty scene
 			UISystem.SetScene(new GameUI(), null);
 			Director.Instance.RunWithScene(new CrawlerScreen(), true);

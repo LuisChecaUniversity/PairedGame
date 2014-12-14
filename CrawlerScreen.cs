@@ -8,8 +8,6 @@ namespace PairedGame
 	{
 		public CrawlerScreen()
 		{
-			Info.TotalGameTime = 0f;
-			Info.LevelNumber = 1;
 			LoadLevel(Info.LevelNumber);
 			ScheduleUpdate();
 		}
@@ -36,15 +34,13 @@ namespace PairedGame
 		
 		override public void Update(float dt)
 		{
+			Info.TotalGameTime += dt;
 			Info.CameraHeight = Info.InBattle ? Tile.Height * 5 : Tile.Height * 8;
 			Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Info.CameraCentre);
 			
 			if(Info.LevelClear && Info.LevelNumber < Info.MaxLevels)
 			{
-				Info.LevelNumber++;
-				LoadLevel(Info.LevelNumber);
-				// Load UI
-				SceneManager.ReplaceUIScene(new GameUI());
+				LoadLevel(++Info.LevelNumber);
 			}
 		}
 	}
