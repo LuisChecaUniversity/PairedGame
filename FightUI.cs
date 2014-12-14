@@ -87,23 +87,29 @@ namespace PairedGame
 			cross.Text = "Melee";
 			RootWidget.AddChildLast(cross);
 			
-			// New line
+			// Circle line
 			y += ImageSize;
 			circle.SetPosition(x, y);
 			circle.Text = "Strong Melee";
 			RootWidget.AddChildLast(circle);
 			
-			// New line
+			// Square line
 			y += ImageSize;
 			square.SetPosition(x, y);
 			square.Text = "Ranged";
 			RootWidget.AddChildLast(square);
 			
-			// New line
+			// Triangle line
 			y += ImageSize;
 			triangle.SetPosition(x, y);
 			triangle.Text = "Strong Ranged";
 			RootWidget.AddChildLast(triangle);
+			
+			// L line
+			y += ImageSize;
+			l.SetPosition(x, y);
+			l.Text = "Block";
+			RootWidget.AddChildLast(l);
 		}
 		
 		override protected void OnUpdate(float dt)
@@ -116,29 +122,18 @@ namespace PairedGame
 			
 			UIColor black = new UIColor(.1f, .1f, .1f, 1f);
 			UIColor white = new UIColor(1f, 1f, 1f, 1f);
+			Label[] labels = { cross.Desc, circle.Desc, square.Desc, triangle.Desc, l.Desc };
 			Label label = null;
 			
 			// Match attack to hint box
-			switch(player.Attack)
-			{
-			case AttackStatus.MeleeNormal:
-				label = cross.Desc;
-				break;
-			case AttackStatus.MeleeStrong:
-				label = circle.Desc;
-				break;
-			case AttackStatus.RangedNormal:
-				label = square.Desc;
-				break;
-			case AttackStatus.RangedStrong:
-				label = triangle.Desc;
-				break;
-			}
-			// Block to L hint box
-			if(player.IsDefending)
-				label = l.Desc;
+			if(player.Attack != AttackStatus.None)
+				label = labels[(int)player.Attack - 1];
 			
-			// Any matches then swap colors
+			// Match block to hint box
+			if(player.IsDefending)
+				label = l.Desc;			
+			
+			// If any matches then swap colors
 			if(label != null)
 			{
 				label.TextColor = black;
@@ -146,14 +141,14 @@ namespace PairedGame
 			}
 			else
 			{
-				cross.Desc.TextColor = white;
-				cross.Desc.TextShadow.Color = black;
-				circle.Desc.TextColor = white;
-				circle.Desc.TextShadow.Color = black;
-				square.Desc.TextColor = white;
-				square.Desc.TextShadow.Color = black;
-				triangle.Desc.TextColor = white;
-				triangle.Desc.TextShadow.Color = black;
+				foreach(Label lab in labels)
+				{
+					if(label != lab)
+					{
+						lab.TextColor = white;
+						lab.TextShadow.Color = black;
+					}
+				}
 			}
 		}
 	}
