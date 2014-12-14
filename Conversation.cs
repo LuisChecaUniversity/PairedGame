@@ -15,6 +15,7 @@ namespace PairedGame
 		
 		public Conversation()
 		{
+			SceneManager.PauseScene();
 			Title = "Conversations";
 			Count = 0;
 			
@@ -84,6 +85,7 @@ namespace PairedGame
 		
 		private void WrongAnswerAction(object sender, TouchEventArgs e)
 		{
+			read.Text = "Fight!";
 			read.ButtonAction -= NextChoiceAction;
 			read.ButtonAction += EndAction;
 			Info.InBattle = true;
@@ -92,8 +94,8 @@ namespace PairedGame
 		
 		private void EndAction(object sender, TouchEventArgs e)
 		{
-			SceneManager.ReplaceUIScene();
 			Info.HadConversation = true;
+			SceneManager.ReplaceUIScene(new GameUI());
 			SceneManager.ResumeScene();
 		}
 		

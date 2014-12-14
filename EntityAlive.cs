@@ -87,7 +87,7 @@ namespace PairedGame
 				else
 				{
 					TileIndex2D.X = TextureInfo.NumTiles.X - 1;
-					UnscheduleAll();
+					UnscheduleUpdate();
 				}
 			}, interval);
 		}
@@ -126,7 +126,7 @@ namespace PairedGame
 						Opponent = null;
 						Info.EnemiesKilled += 1;
 						Info.Reputation += 1;
-						if(SceneManager.CurrentUIScene is FightUI)
+						if(SceneManager.CurrentUIScene.GetType() != typeof(DeadUI))
 							SceneManager.ReplaceUIScene();
 					}
 				}

@@ -72,27 +72,43 @@
     <Content Include="assets\dungeon_tiles.png">
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
     </Content>
-    <Content Include="assets\vita_circle.png" />
-    <Content Include="assets\vita_cross.png" />
-    <Content Include="assets\vita_l.png" />
-    <Content Include="assets\vita_square.png" />
-    <Content Include="assets\vita_triangle.png" />
-    <Content Include="assets\green.png" />
-    <Content Include="assets\level1.txt" />
-    <Content Include="assets\level2.txt" />
-    <Content Include="assets\level3.txt" />
-    <Content Include="assets\miniboss1.txt" />
+    <Content Include="assets\vita_circle.png">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\vita_cross.png">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\vita_l.png">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\vita_square.png">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\vita_triangle.png">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\green.png">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\level1.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\level2.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\level3.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\miniboss1.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
     <Content Include="assets\dungeon-ambience.mp3">
       <DeployService-Deploy>true</DeployService-Deploy>
       <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-      <PSM-Content-Protection>SignedAndEncrypted</PSM-Content-Protection>
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
     </Content>
-    <Content Include="assets\draw-knife.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\level_key.txt" />
-    <None Include="assets\level4.txt" />
-    <None Include="assets\level5.txt" />
-    <None Include="assets\BonusLevel.txt" />
+    <Content Include="assets\draw-knife.wav">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+    </Content>
   </ItemGroup>
 </Project>

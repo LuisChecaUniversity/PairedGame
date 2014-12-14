@@ -126,8 +126,9 @@ namespace PairedGame
 						if(!Info.HadConversation)
 						{
 							SceneManager.ReplaceUIScene(new Conversation());
-							SceneManager.PauseScene();
 						}
+						else
+							e.IsCollidable = false;
 					}
 					else if(e.IsAlive)
 					{
