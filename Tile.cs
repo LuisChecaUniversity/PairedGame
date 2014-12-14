@@ -110,7 +110,7 @@ namespace PairedGame
 			bool collisionBottom = pos.Y < Position.Y + offset && speed.Y < 0;
 			
 			// Immediately collide if tile is occupied
-			if(IsOccupied || IsBoss)
+			if(IsOccupied)
 			{
 				speed *= factor;
 				return;
