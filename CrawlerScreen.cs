@@ -29,14 +29,15 @@ namespace PairedGame
 			Tile.Loader("/Application/assets/level" + level.ToString() + ".txt", ref cameraCentre, this);
 			// Reset camera to player position
 			Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, cameraCentre);
+			Info.CameraCentre = cameraCentre;
 			if(level != Info.LevelNumber)
 				Info.LevelNumber = level;
 		}
 		
 		override public void Update(float dt)
 		{
-			Info.CameraHeight = Info.InBattle ? 150f : 200f;
-			
+			Info.CameraHeight = Info.InBattle ? Tile.Height * 5 : Tile.Height * 8;
+			Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Info.CameraCentre);
 			if(Info.LevelClear && Info.LevelNumber < Info.MaxLevels)
 			{
 				Info.LevelNumber++;

@@ -22,6 +22,8 @@ namespace PairedGame
 		
 		public static float CameraHeight { get; set; }
 		
+		public static Sce.PlayStation.Core.Vector2 CameraCentre { get; set; }
+		
 		public static bool LevelClear { get; set; }
 		
 		public static int Reputation { get; set; }

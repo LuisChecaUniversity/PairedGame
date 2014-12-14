@@ -32,8 +32,7 @@ namespace PairedGame
 			// Apply the movement
 			Position = Position + MoveSpeed;
 			// Make camera follow the player
-			if(Parent != null)
-				Parent.Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Position);			
+			Info.CameraCentre = Position;
 		}
 		
 		private static float MoveDelta = 2f;
@@ -105,14 +104,16 @@ namespace PairedGame
 								SceneManager.ReplaceUIScene(new Conversation());
 								SceneManager.PauseScene();
 							}
-						} else if(t.Occupier.IsAlive)
+						}
+						else if(t.Occupier.IsAlive)
 						{
 							Opponent = t.Occupier;
 							Opponent.Opponent = this;
 							Opponent.InBattle = true;
 							InBattle = true;
 							Info.InBattle = true;
-						} else
+						}
+						else
 						{
 							t.IsOccupied = false;
 							Opponent = null;
