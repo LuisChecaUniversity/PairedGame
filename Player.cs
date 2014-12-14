@@ -13,7 +13,7 @@ namespace PairedGame
 			base(PLAYER_INDEX, position, new Vector2i(0, 1))
 		{
 			IsDefending = false;
-			Stats.Lives = 5;
+			Stats.Lives = 3;
 		}
 		
 		override public void Update(float dt)
@@ -102,7 +102,7 @@ namespace PairedGame
 			if(SceneManager.CurrentScene == null)
 				return;
 			// Loop through tiles
-			foreach(Tile t in SceneManager.CurrentScene.Children[0].Children)
+			foreach(Tile t in Tile.Collisions)
 			{
 				if(t.Overlaps(this))
 				{

@@ -147,11 +147,17 @@ namespace PairedGame
 
 		public static int Width { get { return 32; } }
 		
+		public static System.Collections.Generic.List<Tile> Collisions = new System.Collections.Generic.List<Tile>();
+		
 		public static void Loader(string filepath, ref Vector2 playerPos, Scene scene)
 		{
 			Vector2 pos = Vector2.Zero;
 			Tile t = null;
+			// Pause timer
+			SceneManager.PauseScene();
 			
+			// Clear collision list
+			Collisions.Clear();			
 			// Read whole level files to lines
 			var lines = System.IO.File.ReadAllLines(filepath);
 			// Make SpriteLists to improve efficiency
@@ -174,6 +180,10 @@ namespace PairedGame
 					// Make/add tile at pos
 					t = new Tile(c, pos);
 					tiles.AddChild(t);
+					
+					// If has collision add to list
+					if(t.collidableSides != Collidable.None || c == 'Z')
+						Collisions.Add(t);
 					
 					// Player start, pass position
 					if(c == 'S')
@@ -211,6 +221,9 @@ namespace PairedGame
 			// Player has position, add player last to scene
 			if(!playerPos.IsZero())
 				scene.AddChild(new Player(playerPos));
+			
+			// Resume Timers
+			SceneManager.ResumeScene();
 		}
 	}
 }
