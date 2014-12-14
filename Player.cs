@@ -35,6 +35,8 @@ namespace PairedGame
 			Info.CameraCentre = Position;
 		}
 		
+		public AttackStatus Attack { get { return attackState; } }
+		
 		private static float MoveDelta = 2f;
 		
 		private void HandleInput()
@@ -112,6 +114,7 @@ namespace PairedGame
 							Opponent.InBattle = true;
 							InBattle = true;
 							Info.InBattle = true;
+							SceneManager.ReplaceUIScene(new FightUI(this, Opponent));
 						}
 						else
 						{

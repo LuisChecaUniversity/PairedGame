@@ -51,6 +51,7 @@
     <Compile Include="Info.cs" />
     <Compile Include="Conversation.cs" />
     <Compile Include="GameUI.cs" />
+    <Compile Include="FightUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -96,6 +97,12 @@
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
       <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </Content>
+    <Content Include="assets\vita_circle.png" />
+    <Content Include="assets\vita_cross.png" />
+    <Content Include="assets\vita_l.png" />
+    <Content Include="assets\vita_square.png" />
+    <Content Include="assets\vita_triangle.png" />
+    <Content Include="assets\green.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\level_key.txt">
