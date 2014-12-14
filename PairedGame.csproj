@@ -50,6 +50,7 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="Conversation.cs" />
+    <Compile Include="GameUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
