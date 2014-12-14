@@ -65,21 +65,40 @@
   <ItemGroup>
     <Content Include="assets\dungeon_objects.png">
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </Content>
     <Content Include="assets\dungeon_tiles.png">
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </Content>
     <Content Include="assets\level1.txt">
       <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </Content>
-    <Content Include="assets\level2.txt" />
-    <Content Include="assets\level3.txt" />
-    <Content Include="assets\miniboss1.txt" />
+    <Content Include="assets\level2.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="assets\level3.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="assets\miniboss1.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="assets\level4.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </Content>
+    <Content Include="assets\level5.txt">
+      <PSM-Content-Protection>Plain</PSM-Content-Protection>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\level_key.txt" />
-    <None Include="assets\level4.txt" />
-    <None Include="assets\level5.txt" />
-    <None Include="assets\BonusLevel.txt" />
+    <None Include="assets\level_key.txt">
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </None>
   </ItemGroup>
 </Project>
