@@ -79,7 +79,7 @@ namespace PairedGame
 				else
 				{
 					TileIndex2D.X = TextureInfo.NumTiles.X - 1;
-					UnscheduleUpdate();
+					UnscheduleAll();
 				}
 			}, interval);
 		}
