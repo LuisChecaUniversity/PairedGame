@@ -60,7 +60,7 @@ namespace PairedGame
 			// Health bar
 			health.SetPosition(20, 30);
 			health.Image = new ImageAsset("/Application/assets/green.png");
-			health.Height = 10;
+			health.Height = 20;
 			health.Width = player.Stats.Health;
 			RootWidget.AddChildLast(health);
 			
@@ -74,7 +74,7 @@ namespace PairedGame
 			// Enemy health
 			enemyHealth.SetPosition(450, 30);
 			enemyHealth.Image = new ImageAsset("/Application/assets/green.png");
-			enemyHealth.Height = 10;
+			enemyHealth.Height = 20;
 			enemyHealth.Width = enemy.Stats.Health;
 			RootWidget.AddChildLast(enemyHealth);
 			
@@ -108,6 +108,12 @@ namespace PairedGame
 		
 		override protected void OnUpdate(float dt)
 		{
+			// Update stats
+			livesText.Text = "Lives: " + player.Stats.Lives.ToString();
+			enemyLivesText.Text = "Lives: " + enemy.Stats.Lives.ToString();
+			health.Width = player.Stats.Health;
+			enemyHealth.Width = enemy.Stats.Health;
+			
 			UIColor black = new UIColor(.1f, .1f, .1f, 1f);
 			UIColor white = new UIColor(1f, 1f, 1f, 1f);
 			Label label = null;
