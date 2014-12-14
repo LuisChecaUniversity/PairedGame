@@ -106,7 +106,7 @@ namespace PairedGame
 						Opponent.InBattle = false;
 						Opponent.Opponent = null;
 						Opponent = null;
-						SceneManager.ReplaceUIScene(new GameUI());
+						SceneManager.ReplaceUIScene();
 						Info.EnemiesKilled += 1;
 						Info.Reputation += 1;
 					}

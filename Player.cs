@@ -116,9 +116,10 @@ namespace PairedGame
 							Opponent = t.Occupier;
 							Opponent.Opponent = this;
 							Opponent.InBattle = true;
+							if(!InBattle)
+								SceneManager.ReplaceUIScene(new FightUI(this, Opponent));
 							InBattle = true;
 							Info.InBattle = true;
-							SceneManager.ReplaceUIScene(new FightUI(this, Opponent));
 						}
 						else
 						{

@@ -23,9 +23,12 @@ namespace PairedGame
 			get{ return Sce.PlayStation.HighLevel.UI.UISystem.CurrentScene; } 
 		}
 
-		public static void ReplaceUIScene(Sce.PlayStation.HighLevel.UI.Scene scene)
+		public static void ReplaceUIScene(Sce.PlayStation.HighLevel.UI.Scene scene = null)
 		{
-			Sce.PlayStation.HighLevel.UI.UISystem.SetScene(scene);
+			if(scene == null)
+				Sce.PlayStation.HighLevel.UI.UISystem.PopScene();
+			else
+				Sce.PlayStation.HighLevel.UI.UISystem.PushScene(scene);
 		}
 		
 		public static void PauseScene()

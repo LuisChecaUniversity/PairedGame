@@ -92,7 +92,7 @@ namespace PairedGame
 		
 		private void EndAction(object sender, TouchEventArgs e)
 		{
-			SceneManager.ReplaceUIScene(new Scene());
+			SceneManager.ReplaceUIScene();
 			Info.HadConversation = true;
 			SceneManager.ResumeScene();
 		}
