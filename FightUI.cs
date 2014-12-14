@@ -110,6 +110,9 @@ namespace PairedGame
 			l.SetPosition(x, y);
 			l.Text = "Block";
 			RootWidget.AddChildLast(l);
+			
+			// Play Fight sound
+			AudioManager.PlaySound("fight", false, 2f, 1f, 1f);
 		}
 		
 		override protected void OnUpdate(float dt)

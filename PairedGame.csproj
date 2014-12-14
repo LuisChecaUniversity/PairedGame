@@ -82,6 +82,12 @@
     <Content Include="assets\level2.txt" />
     <Content Include="assets\level3.txt" />
     <Content Include="assets\miniboss1.txt" />
+    <Content Include="assets\dungeon-ambience.mp3">
+      <DeployService-Deploy>true</DeployService-Deploy>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+      <PSM-Content-Protection>SignedAndEncrypted</PSM-Content-Protection>
+    </Content>
+    <Content Include="assets\draw-knife.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\level_key.txt" />

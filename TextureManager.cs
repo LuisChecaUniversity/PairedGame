@@ -19,6 +19,14 @@ namespace PairedGame
 			if(IsAssetLoaded(key))
 				resourceMap[key].Texture.SetFilter(Sce.PlayStation.Core.Graphics.TextureFilterMode.Disabled);
 		}
+		
+		public static void Dispose()
+		{
+			foreach(var k in resourceMap.Keys)
+			{
+				RemoveAsset(k);
+			}
+		}
 	}
 }
 

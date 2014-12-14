@@ -8,6 +8,7 @@ namespace PairedGame
 	{
 		public CrawlerScreen()
 		{
+			AudioManager.PlayMusic("ambient", true, 1f, 1f);
 			LoadLevel(Info.LevelNumber);
 			ScheduleUpdate();
 		}

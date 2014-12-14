@@ -1,6 +1,7 @@
 using System;
 
 using Sce.PlayStation.Core;
+using Sce.PlayStation.Core.Audio;
 using Sce.PlayStation.Core.Environment;
 using Sce.PlayStation.Core.Graphics;
 using Sce.PlayStation.Core.Input;
@@ -28,6 +29,9 @@ namespace PairedGame
 				Director.Instance.GL.Context.SwapBuffers(); // Swap between back and front buffer
 				Director.Instance.PostSwap(); // Must be called after swap buffers - not 100% sure, imagine it resets back buffer to black/white, unallocates tied resources for next swap
 			}
+			TextureManager.Dispose();
+			AudioManager.StopMusic();
+			AudioManager.StopSounds();
 			Director.Terminate();	// Kill (terminate) the director, hence ending 2D scene program, once we are done with the scene (clicking red X button)
 			Sce.PlayStation.HighLevel.UI.UISystem.Terminate();
 		}
@@ -43,6 +47,11 @@ namespace PairedGame
 			                                                 new Vector2i(21, 5)));
 			TextureManager.AddAsset("entities", new TextureInfo(new Texture2D("/Application/assets/dungeon_objects.png", false),
 			                                                 new Vector2i(9, 14)));
+			
+			//Load and store sounds
+			AudioManager.AddSound("/Application/assets/draw-knife.wav", "fight");
+			AudioManager.AddMusic("/Application/assets/dungeon-ambience.mp3", "ambient");
+			
 			// Initial Values;
 			Info.TotalGameTime = 0f;
 			Info.LevelNumber = 1;
