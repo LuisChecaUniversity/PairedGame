@@ -18,17 +18,17 @@ namespace PairedGame
 		{
 			// Clear scene
 			if(Children.Count > 0)
+			{
+				Children.ForEach(n => n.RemoveAllChildren(true));
 				Children.Clear();
+			}
 			// (Re)Initialize variables
-			Info.CameraHeight = 200f;
 			Info.LevelClear = false;
 			Info.InBattle = false;
 			Info.HadConversation = false;
 			Vector2 cameraCentre = new Vector2();
 			// Load level layout from file
 			Tile.Loader("/Application/assets/level" + level.ToString() + ".txt", ref cameraCentre, this);
-			// Reset camera to player position
-			Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, cameraCentre);
 			Info.CameraCentre = cameraCentre;
 			if(level != Info.LevelNumber)
 				Info.LevelNumber = level;
@@ -38,10 +38,13 @@ namespace PairedGame
 		{
 			Info.CameraHeight = Info.InBattle ? Tile.Height * 5 : Tile.Height * 8;
 			Camera2D.SetViewFromHeightAndCenter(Info.CameraHeight, Info.CameraCentre);
+			
 			if(Info.LevelClear && Info.LevelNumber < Info.MaxLevels)
 			{
 				Info.LevelNumber++;
 				LoadLevel(Info.LevelNumber);
+				// Load UI
+				SceneManager.ReplaceUIScene(new GameUI());
 			}
 		}
 	}
