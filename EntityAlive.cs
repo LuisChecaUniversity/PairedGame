@@ -18,7 +18,7 @@ namespace PairedGame
 		public int Health = 100;
 		public int Lives = 2;
 		public int Defense = 100;
-		public int Attack = 20;
+		public int Attack = 10;
 		public int RangedAttack = 15;
 
 		public double Luck { get { return Info.Rnd.NextDouble() * (1 - 0.5) + 0.5; } }
@@ -46,8 +46,8 @@ namespace PairedGame
 		public EntityAlive(Vector2 position):
 			base(position)
 		{
-			// NPCs block by default
-			IsDefending = true;
+			// NPCs don't block by default
+			IsDefending = false;
 			// Attach attack timer
 			if(this.GetType() == typeof(EntityAlive))
 			{
@@ -71,6 +71,8 @@ namespace PairedGame
 					int tileIndex = TileIndex2D.X < TileRangeX.Y ? TileIndex2D.X + 1 : TileRangeX.X;
 					TileIndex2D.X = tileIndex;
 				}
+				else					
+					TileIndex2D.X = TextureInfo.NumTiles.X - 1;
 			}, interval);
 		}
 		
@@ -89,7 +91,7 @@ namespace PairedGame
 				if(--Stats.Lives <= 0)
 					IsAlive = false;
 			}
-			
+			// Fight!
 			if(InBattle)
 			{
 				// Deal damage
