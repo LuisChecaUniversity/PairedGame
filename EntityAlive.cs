@@ -124,8 +124,6 @@ namespace PairedGame
 				}
 				// Reset attack, defense
 				attackState = AttackStatus.None;
-				if(IsDefending && this.GetType() == typeof(Player))
-					IsDefending = false;
 			}
 			base.Update(dt);
 		}
