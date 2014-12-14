@@ -9,7 +9,8 @@ namespace PairedGame
 		
 		public static void AddAsset(string key, T asset)
 		{
-			if (!IsAssetLoaded(key)) resourceMap.Add(key, asset);
+			if(!IsAssetLoaded(key))
+				resourceMap.Add(key, asset);
 		}
 		
 		public static void RemoveAsset(string key)

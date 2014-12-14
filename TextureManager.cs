@@ -10,7 +10,14 @@ namespace PairedGame
 			if(!IsAssetLoaded(key))
 				return;
 			resourceMap[key].Dispose();
-			resourceMap.Remove(key);
+			AssetManager<TextureInfo>.RemoveAsset(key);
+		}
+
+		new public static void AddAsset(string key, TextureInfo asset)
+		{
+			AssetManager<TextureInfo>.AddAsset(key, asset);
+			if(IsAssetLoaded(key))
+				resourceMap[key].Texture.SetFilter(Sce.PlayStation.Core.Graphics.TextureFilterMode.Disabled);
 		}
 	}
 }
