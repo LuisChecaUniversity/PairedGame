@@ -65,22 +65,22 @@ namespace PairedGame
 			RootWidget.AddChildLast(health);
 			
 			// Enemy lives
-			enemyLivesText.SetPosition(450, 5);
+			enemyLivesText.SetPosition(480, 5);
 			enemyLivesText.Text = "Lives: " + enemy.Stats.Lives.ToString();
 			enemyLivesText.TextColor = new UIColor(0.8f, 0f, 0f, 1f);
 			enemyLivesText.TextShadow = new TextShadowSettings();
 			enemyLivesText.TextShadow.Color = new UIColor(0.1f, 0.1f, 0.1f, 1f);
 			RootWidget.AddChildLast(enemyLivesText);
 			// Enemy health
-			enemyHealth.SetPosition(450, 30);
+			enemyHealth.SetPosition(480, 30);
 			enemyHealth.Image = new ImageAsset("/Application/assets/green.png");
 			enemyHealth.Height = 20;
 			enemyHealth.Width = enemy.Stats.Health;
 			RootWidget.AddChildLast(enemyHealth);
 			
 			// Hint buttons
-			float x = 200;
-			float y = 40;
+			float x = 180;
+			float y = 100;
 			
 			// Hint image
 			cross.SetPosition(x, y);
