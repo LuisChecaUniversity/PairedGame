@@ -21,10 +21,10 @@ namespace PairedGame
 			ScheduleUpdate();
 		}
 		
-		public Entity(int tileIndex, Vector2 position):
+		public Entity(Vector2i tileIndex2D, Vector2 position):
 			this(position)
 		{
-			TileIndex1D = tileIndex;
+			TileIndex2D = tileIndex2D;
 		}
 		
 		override public void Update(float dt)
